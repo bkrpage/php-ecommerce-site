@@ -1,3 +1,4 @@
+<?php
 class Common {
 	private static $uid = "i7709331";
 	private static $pwd = "phppass";
@@ -13,3 +14,4 @@ class Common {
 		mysqli_real_escape_string($conn, $input);
 	}
 }
+?>

@@ -1,3 +1,4 @@
+<?php
 class Cart implements Iterator, Countable {
     protected $items = array();
     protected $position = 0;
@@ -68,3 +69,4 @@ class Cart implements Iterator, Countable {
         return $this->items[$index];
     } // End of current() method.
 }
+?>

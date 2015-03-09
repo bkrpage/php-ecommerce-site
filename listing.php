@@ -1,10 +1,6 @@
 <?php
     require($_SERVER['DOCUMENT_ROOT'] . '/practise/src/require.php');
 
-
-    // This would be set with the url i.e. GET method.
-    // the ID would be set with get and the info is retrievd from database.
-
     $conn = Common::connect_db();
 
     $item_id = $_GET['id'];

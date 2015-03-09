@@ -1,3 +1,4 @@
+<?php
 class Item {
     protected $id;
     protected $name;
@@ -21,3 +22,4 @@ class Item {
         return $this -> price;
     }
 }
+?>
