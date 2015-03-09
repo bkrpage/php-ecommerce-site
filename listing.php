@@ -1,5 +1,5 @@
 <?php
-    require($_SERVER['DOCUMENT_ROOT'] . '/practise/src/require.php');
+    require($_SERVER['DOCUMENT_ROOT'] . '/php-eshop/src/require.php');
 
     $conn = Common::connect_db();
 
@@ -11,20 +11,26 @@
     //$item = new Item("a","b","2");
 
     while ($row = mysqli_fetch_row($result)){
-        $item = new Item($row[0],$row[1], $row[5]);
+        //create Item using database
+        $item = new Item($row[0],$row[1],$row[2], $row[3], $row[4]);
     }
 
     $page_title = "Listing - " . $item -> getName();
 
     // bring in html header.
-    require("inc/header.php");
+    include("inc/header.php");
 ?>
-    <h1>item: <?php echo $item -> getName(); ?></h1>
+    <h1><?php echo $item -> getName(); ?></h1>
     <p>
-        <?php echo "Price: £" . $item -> getPrice(); ?>
+        <h3><?php echo "Price: £" . $item -> getPrice(); ?></h3>
+
+        <img src="<?php echo $item -> getImgPath(); ?>" alt="Image of <?php $item -> getName(); ?>">
+
+        <?php echo $item -> getDesc(); ?>
+
         <form action="basket.php?id=<?php echo $item->getId(); ?>&buy" method="GET">
             <input type="submit" value ="Buy">
         </form>
+
+
     </p>
-
-

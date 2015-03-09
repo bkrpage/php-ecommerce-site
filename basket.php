@@ -1,7 +1,7 @@
 <html>
 <head>
     <?php
-    require($_SERVER['DOCUMENT_ROOT'] . '/practise/src/require.php');
+    require($_SERVER['DOCUMENT_ROOT'] . '/php-eshop/src/require.php');
 
     if (isset($cart)) {
         $cart = new Cart();
