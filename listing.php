@@ -28,7 +28,9 @@
 
         <?php echo $item -> getDesc(); ?>
 
-        <form action="basket.php?id=<?php echo $item->getId(); ?>&buy" method="GET">
+        <form action="basket.php" method="GET">
+            <input type="hidden" name="id" value="<?php echo $item->getId(); ?>">
+            <input type="hidden" name="buy" value="true" >
             <input type="submit" value ="Buy">
         </form>
 
