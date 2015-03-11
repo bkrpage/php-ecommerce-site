@@ -13,7 +13,7 @@ class Cart implements Iterator, Countable {
 
         if (isset($this -> items[$id])) {
             // If there's already an item with $item's ID --
-            $this -> updateItem($item, $this -> items[$item]['qty'] + 1);
+            $this -> updateItem($item, $this -> items[$id]['qty'] + 1);
         } else {
             $this -> items[$id] = array('item' => $item, 'qty' => 1);
             $this -> ids[] = $id;

@@ -41,8 +41,6 @@
     }
 
     print_r($cart -> getItems());
-    echo "<BR><BR><BR>";
-    print_r($cart);
 
 ?>
 </body>
