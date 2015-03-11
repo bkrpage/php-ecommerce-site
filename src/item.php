@@ -57,5 +57,9 @@ class Item {
     public function getPrice(){
         return $this -> price;
     }
+
+    public function getStock(){
+        return $this -> stock;
+    }
 }
 ?>
