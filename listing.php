@@ -5,7 +5,7 @@
     if (isset($_GET['v'])) {
         $variant_id = $_GET['v'];
     } else {
-        $variant_id = 0;
+        $variant_id = 1;
     }
 
     $conn = Common::connect_db();
@@ -60,6 +60,4 @@
             <input type="hidden" name="add" value="true" >
             <input type="submit" value ="Buy">
         </form>
-
-    <?php print_r($item); ?>
     </p>
