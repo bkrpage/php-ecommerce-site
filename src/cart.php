@@ -11,11 +11,8 @@ class Cart implements Iterator, Countable {
     public function addItem(Item $item){
         $id = $item -> getId();
 
-        if (!$id) throw new Exception(
-            'The cart requires items with unique ID values');
-
         if (isset($this -> items[$id])) {
-            //uses classes own function, if the item is already there adds onto the qty
+            // If there's already an item with $item's ID --
             $this -> updateItem($item, $this -> items[$item]['qty'] + 1);
         } else {
             $this -> items[$id] = array('item' => $item, 'qty' => 1);
@@ -49,6 +46,10 @@ class Cart implements Iterator, Countable {
 
     public function getItems(){
         return $this -> items;
+    }
+
+    public function setItems($items){
+        $this -> items = $items;
     }
 
     public function count(){

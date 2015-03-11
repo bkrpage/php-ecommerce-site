@@ -30,7 +30,7 @@
 
         <form action="basket.php" method="GET">
             <input type="hidden" name="id" value="<?php echo $item->getId(); ?>">
-            <input type="hidden" name="buy" value="true" >
+            <input type="hidden" name="add" value="true" >
             <input type="submit" value ="Buy">
         </form>
 
