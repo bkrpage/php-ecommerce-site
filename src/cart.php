@@ -3,7 +3,7 @@ class Cart implements Iterator, Countable {
     protected $items = array();
     protected $position = 0;
     protected $ids = array();
-
+    protected $total_price = 0;
     public function isEmpty() {
         return (empty($this->items));
     }
@@ -46,6 +46,20 @@ class Cart implements Iterator, Countable {
 
     public function getItems(){
         return $this -> items;
+    }
+
+    public function calcTotalPrice(){
+        $total_price = 0;
+
+        foreach ($this-> items as $arr){
+            $item = $arr['item'];
+            $price = $item -> getPrice();
+            $qty = $arr['qty'];
+
+            $total_price += $price * $qty;
+        }
+
+        return $total_price;
     }
 
     public function setItems($items){

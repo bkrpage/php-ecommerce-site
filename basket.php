@@ -40,8 +40,8 @@
         }
     }
 
-    print_r($cart -> getItems());
-
+    $total = $cart -> calcTotalPrice();
+    echo "<p>Total: £$total </p>";
 ?>
 </body>
 </html>
