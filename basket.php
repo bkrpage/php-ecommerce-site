@@ -9,13 +9,13 @@
     }
 
     // Adds item to cart from URL.
-    if ($_POST['add'] == true){
+    if (isset($_POST['add'])){
+
+        $product_id = $_POST['id'];
+        $variant_id = $_POST['v'];
+
         $conn = Common::connect_db();
-
-        $product_id = $_GET['id'];
-        $variant_id = $_GET['v'];
-
-        $get_product = "SELECT * FROM PRODUCT WHERE ITEM_ID = '$product_id'";
+        $get_product = "SELECT * FROM ITEM WHERE ITEM_ID = '$product_id'";
         $get_variant = "SELECT * FROM ITEM_VARIANT WHERE ITEM_ID = '$product_id' AND VARIANT_ID = '$variant_id'";
         $product_result = mysqli_query($conn,$get_product);
         $variant_result = mysqli_query($conn,$get_variant);
@@ -23,6 +23,7 @@
         $id = null;
         $name = null;
         $desc = null;
+
         while ($row = mysqli_fetch_assoc($product_result)){
             // Get Base information from table "ITEM"
             $id = $row['ITEM_ID'];
@@ -48,11 +49,14 @@
     <h2>Cart Contents (<?php echo count($cart) ?> items)</h2>
 
 <?php
-    echo "Hello";
+
     if (!$cart -> isEmpty()) {
-        foreach ($cart -> getItems() as $arr) {
-            $item = $arr['item'];
-            printf('<p><strong>%s - %s</strong>: %d @ £%0.2f each.</p>', $item->getPName(), $item -> getVName(), $arr['qty'], $item->getPrice());
+        foreach ($cart -> getItems() as $items) { // goes into first layer of array revealing item ID
+            foreach ($items as $vrnt) { // goes into 2nd layer of array revealing variant ID
+                $item = $vrnt['item']; // gets the item object stored under that item and variant and refactors it into $item
+                $qty = $vrnt['qty'];
+                printf('<p><strong>%s - %s</strong>: %d @ £%0.2f each.</p>', $item -> getPName(), $item-> getVDesc(), $qty, $item->getPrice());
+            }
         }
     }
 
