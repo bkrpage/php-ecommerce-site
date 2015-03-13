@@ -1,8 +1,9 @@
 <?php
 class Cart implements Iterator, Countable {
-    protected $items = array();
     protected $position = 0;
+    protected $items = array();
     protected $ids = array();
+    protected $v_ids = array();
     protected $total_price = 0;
     public function isEmpty() {
         return (empty($this->items));
@@ -10,32 +11,36 @@ class Cart implements Iterator, Countable {
 
     public function addItem(Item $item){
         $id = $item -> getPId();
+        $v_id = $item -> getVID();
 
-        if (isset($this -> items[$id])) {
+        if (isset($this -> items[$id][$v_id])) {
             // If there's already an item with $item's ID --
-            $this -> updateItem($item, $this -> items[$id]['qty'] + 1);
+            $this -> updateItem($item, $this -> items[$id][$v_id]['qty'] + 1);
         } else {
-            $this -> items[$id] = array('item' => $item, 'qty' => 1);
+            $this -> items[$id][$v_id] = array('item' => $item, 'qty' => 1);
             $this -> ids[] = $id;
+            $this -> v_ids[] = $v_id;
 		}
     }
 
     public function updateItem(Item $item, $qty){
-        $id = $item->getPId();
+        $id = $item -> getPId();
+        $v_id = $item -> getVID();
 
         if ($qty === 0){
             $this -> deleteItem($item);
-        } else if (($qty > 0) && ($qty != $this -> items[$id]['qty'])) {
-            $this->items[$id]['qty'] = $qty;
+        } else if (($qty > 0) && ($qty != $this -> items[$id][$v_id]['qty'])) {
+            $this->items[$id][$v_id]['qty'] = $qty;
         }
     }
 
 
     public function deleteItem(Item $item){
         $id = $item -> getPId();
+        $v_id = $item -> getVID();
 
-        if (isset($this -> items[$id])) {
-            unset($this->items[$id]);
+        if (isset($this -> items[$id][$v_id]) ) {
+            unset($this->items[$id][$v_id]);
 
             $index = array_search($id, $this->ids);
             unset($this->ids[$index]);
@@ -51,12 +56,14 @@ class Cart implements Iterator, Countable {
     public function calcTotalPrice(){
         $total_price = 0;
 
-        foreach ($this-> items as $arr){
-            $item = $arr['item'];
-            $price = $item -> getPrice();
-            $qty = $arr['qty'];
+        foreach ($this -> getItems() as $items) {
+            foreach ($items as $vrnt) {
+                $item = $vrnt['item'];
+                $price = $item -> getPrice();
+                $qty = $vrnt['qty'];
 
-            $total_price += $price * $qty;
+                $total_price += $price * $qty;
+            }
         }
 
         return $total_price;
