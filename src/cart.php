@@ -9,7 +9,7 @@ class Cart implements Iterator, Countable {
     }
 
     public function addItem(Item $item){
-        $id = $item -> getId();
+        $id = $item -> getPId();
 
         if (isset($this -> items[$id])) {
             // If there's already an item with $item's ID --
@@ -21,7 +21,7 @@ class Cart implements Iterator, Countable {
     }
 
     public function updateItem(Item $item, $qty){
-        $id = $item->getId();
+        $id = $item->getPId();
 
         if ($qty === 0){
             $this -> deleteItem($item);
@@ -32,7 +32,7 @@ class Cart implements Iterator, Countable {
 
 
     public function deleteItem(Item $item){
-        $id = $item -> getId();
+        $id = $item -> getPId();
 
         if (isset($this -> items[$id])) {
             unset($this->items[$id]);
