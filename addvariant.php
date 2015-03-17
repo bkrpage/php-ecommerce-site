@@ -1,6 +1,6 @@
 <?php
 session_start();
-$feedback = $_SESSION["check"];
+$feedback = $_SESSION["check"]; // Note from bradley - Could this "Check" be changed into something less general, could be "v_added" = true, etc.
 if ($feedback==true){
 echo "Variant has been added";
 }

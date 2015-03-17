@@ -1,5 +1,5 @@
 <?php
-    require($_SERVER['DOCUMENT_ROOT'] . '/php-eshop/src/require.php');
+    require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 
 
     $product_id = $_GET['id'];
@@ -31,7 +31,7 @@
         while ($row = mysqli_fetch_assoc($variant_result)){
             //use base information AND get current variant information.
             $item = new Item($id, $name, $desc, $row['VARIANT_ID'], $row['VARIANT_DESC'],
-                $row['ITEM_IMAGE'], $row['PRICE'], $row['ITEM_STOCK']);
+                $row['ITEM_IMG'], $row['PRICE'], $row['ITEM_STOCK']);
         }
     } else {
         $product_exists = false;

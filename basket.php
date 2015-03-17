@@ -1,5 +1,5 @@
 <?php
-    require($_SERVER['DOCUMENT_ROOT'] . '/php-eshop/src/require.php');
+    require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
     session_start();
 
     $cart = new Cart();
@@ -55,13 +55,20 @@
             foreach ($items as $vrnt) { // goes into 2nd layer of array revealing variant ID
                 $item = $vrnt['item']; // gets the item object stored under that item and variant and refactors it into $item
                 $qty = $vrnt['qty'];
-                printf('<p><strong>%s - %s</strong>: %d @ £%0.2f each.</p>', $item -> getPName(), $item-> getVDesc(), $qty, $item->getPrice());
+                printf('<p><strong>%s - %s</strong>: %d @ £%0.2f each</p>', $item -> getPName(), $item-> getVDesc(), $qty, $item->getPrice());
+
             }
         }
+        $total = $cart -> calcTotalPrice();
+        echo "<p>Total: £$total </p>";
+        echo "
+        <form action='purchase.php' method ='post'>
+            <input type='hidden' name='step' value='1'>
+            <input type='submit' value='Purchase'>
+        </form>
+        ";
     }
 
-    $total = $cart -> calcTotalPrice();
-    echo "<p>Total: £$total </p>";
 ?>
 </body>
 </html>

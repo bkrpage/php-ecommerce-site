@@ -74,7 +74,7 @@ class Cart implements Iterator, Countable {
     }
 
     public function count(){
-        return count($this ->items);
+        return count($this -> items);
     }
     public function key() {
         return $this->position;
