@@ -120,7 +120,7 @@ if (isset($_SESSION['loggedin'])){
                         setcookie($cookie_name, $cookie_value, $cookie_time);$cookie_name = "user";
                     }
 
-                    header('Location: control_panel.php');
+                    header('Location: index.php'); // TODO
                 }
 
                 mysqli_close($conn);

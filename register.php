@@ -14,7 +14,7 @@ if (isset($_COOKIE['user'])){
 if (isset($_SESSION['loggedin'])){
     if ($_SESSION['loggedin'] == true){
 
-        header('Location: control_panel.php?alreadyRegistered=true');
+        header('Location: control_panel.php?alreadyRegistered=true'); //TODO
 
     } else {
         echo "Error";
