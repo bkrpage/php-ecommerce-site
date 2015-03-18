@@ -71,7 +71,7 @@ if (isset($_SESSION['loggedin'])){
 
             if (empty($update_errors)){
                 $_SESSION['userID'] = $session_email;
-                header('Location: account.php?successfulPassChange=true');
+                header('Location: login.php?successfulPassChange=true');
 
 
             } else {
