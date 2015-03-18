@@ -1,10 +1,8 @@
 <?php
+require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 session_start();
-	$uid = "i7214451"; 
-	$pwd = "Password"; 
-	$host = "127.0.0.1";
-	$db = $uid;
-	$conn = mysqli_connect($host, $uid, $pwd, $db);
+	$conn = Common::connect_db();
+	
 	if(isset($_POST["confirm"])){
 	// this is where get all the general user details and display them to him
 	
@@ -14,6 +12,14 @@ session_start();
 	$price =$_POST['price'];
 	$stock = $_POST['stock'];
 	$tags = $_POST['tags'];
+	$count = 1;
+	
+	$itemName = Common::clean($itemName, $conn);
+	$itemDesc = Common::clean($itemDesc, $conn);
+	$variantDesc = Common::clean($variantDesc, $conn);
+	$price = Common::clean($price, $conn);
+	$stock = Common::clean($stock, $conn);
+	$tags = Common::clean($tags, $conn);
 	
 	$item_Id = "SELECT MAX(ITEM_ID)FROM ITEM";
 	$r = mysqli_query($conn,$item_Id);
@@ -58,30 +64,31 @@ if(isset($_POST["moreVariants"])){
 }
 ?>
 <html>
+	
 	<form name="adimAdd" action="admin.php"  method="Post" enctype="multipart/form-data">
 	Item name*:<br>
-	<input type="text" name="itemName"value ="<?php
+	<input required type="text" name="itemName" maxlength = "40" value ="<?php
 	if(isset($_POST['itemName'])){
 	echo $_POST['itemName'];
 	}
 	?>"><br>
 	
 	Description*:<br>
-	<input type="text" name="itemDesc"value = "<?php
+	<input required type="text" name="itemDesc" maxlength = "140" value = "<?php
 	if(isset($_POST['itemDesc'])){
 	echo $_POST['itemDesc'];
 	}
 	?>"><br>
 	
 	Tags* (Separate each tag with a space):<br>
-	<input type="text" name="tags"value = "<?php
+	<input required type="text" name="tags" maxlength = "200" value = "<?php
 	if(isset($_POST['tags'])){
 	echo $_POST['tags'];
 	}
 	?>"><br> 
 	
 	Variant*:<br>
-	<input type="text" name="variantDesc" value="<?php
+	<input required type="text" name="variantDesc" maxlength = "140" value="<?php
 			if(isset($_POST['variantDesc'])){
 			echo $_POST['variantDesc'];
 			}
@@ -93,14 +100,14 @@ if(isset($_POST["moreVariants"])){
 		
 	<p></p>
 	Price*:<br>
-	<input type="text" name="price"value = "<?php
+	<input required type="number" step=".01" decimals="1" name="price" maxlength = "10" value = "<?php
 	if(isset($_POST['price'])){
 	echo $_POST['price'];
 	}
 	?>"><br>
 	
 	Initial variant Stock*:<br>
-	<input type="text" name="stock"value = "<?php
+	<input required type="number" step="10" name="stock" maxlength = "7" value = "<?php
 	if(isset($_POST['stock'])){
 	echo $_POST['stock'];
 	}
@@ -108,7 +115,7 @@ if(isset($_POST["moreVariants"])){
 	
 	<p></p>
 	Select image to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="file" name="fileToUpload1" id="fileToUpload1">
 	<p></p>
 	<button type="submit" name = "confirm"> Add Product</button>
 
