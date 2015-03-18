@@ -1,9 +1,10 @@
 <?php
+require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 session_start();
 
-$page_title = "Change your details"; // Used in header.php
+$page_title = "Change Details";
 
-require 'header.php';
+include("inc/header.php");
 
 if (isset($_COOKIE['user'])){
     $_SESSION['loggedin'] = true;
@@ -43,7 +44,7 @@ if (isset($_SESSION['loggedin'])){
         $auth_errors = array();
 
         $qry_user_details = "SELECT * FROM CUSTOMER_DETAILS WHERE USERNAME LIKE '$session_email';";
-        $result_user_details = mysqli_query($conn,$user_details);
+        $result_user_details = mysqli_query($conn,$qry_user_details);
 
         $user_details = mysqli_fetch_row($result_user_details);
 
@@ -134,7 +135,7 @@ if (isset($_SESSION['loggedin'])){
                 }
 
                 if (!empty($addr1)){
-                    $q_edit_a1 = "UPDATE CUSTOMER_DETAILS SET ADDRESS_1 = '$addr1' WHERE USERNAME LIKE '$session_email'";
+                    $q_edit_a1 = "UPDATE CUSTOMER_DETAILS SET ADDRESS1 = '$addr1' WHERE USERNAME LIKE '$session_email'";
 
                     if(!mysqli_query($conn, $q_edit_a1)){
                         $update_errors[] ="<p class='error'>There was an error while changing Address 1. Please try again.</p><style>.a1{border: 1px solid #CC0000;}</style>";
@@ -158,7 +159,7 @@ if (isset($_SESSION['loggedin'])){
                 }
 
                 if (!empty($postcode)){
-                    $q_edit_pc = "UPDATE CUSTOMER_DETAILS SET POST_CODE = '$postcode' WHERE USERNAME LIKE '$session_email'";
+                    $q_edit_pc = "UPDATE CUSTOMER_DETAILS SET POSTCODE = '$postcode' WHERE USERNAME LIKE '$session_email'";
 
                     if(!mysqli_query($conn, $q_edit_pc)){
                         $update_errors[] ="<p class='error'>There was an error while changing the Post Code. Please try again.</p><style>.pc{border: 1px solid #CC0000;}</style>";
@@ -171,10 +172,10 @@ if (isset($_SESSION['loggedin'])){
 
 
                     if (!mysqli_query($conn, $q_edit_users)) {
-                        $update_errors[] = "<p class='error'>There was an error while changing the Email. Please try again.</p><style>.e{border: 1px solid #CC0000;}</style>";
+                        $update_errors[] = "<p class='error'>There was an error while changing the Email. Please try again.(CUSTOMER_DETAILS)</p><style>.e{border: 1px solid #CC0000;}</style>";
                     } else {
                         if (!mysqli_query($conn, $q_edit_users_2)) {
-                            $update_errors[] = "<p class='error'>There was an error while changing the Email. Please try again.</p><style>.e{border: 1px solid #CC0000;}</style>";
+                            $update_errors[] = "<p class='error'>There was an error while changing the Email. Please try again(LOGIN).</p><style>.e{border: 1px solid #CC0000;}</style>";
                         } else {
                             $_SESSION['userID'] = $email;
                             //needs to change the session emails so it doesnt stay logged in as a false email after changing.
