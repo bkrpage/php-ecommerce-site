@@ -10,8 +10,11 @@ class Common {
         return $conn;
 	}
 	
-	function sanitise($conn,$input){
-		mysqli_real_escape_string($conn, $input);
+	function clean($info, $conn){
+		$info = trim($info);
+		$info = strip_Tags($info);
+		$info = mysqli_real_escape_string($conn, $info);
+		return $info;
 	}
 }
 ?>
