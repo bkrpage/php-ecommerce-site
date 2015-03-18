@@ -1,7 +1,7 @@
 <?php
 	require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 	$conn = Common::connect_db();
-	
+	$item = 5;
 	//updating stock
 	if(isset($_POST['confirm'])){
 		
