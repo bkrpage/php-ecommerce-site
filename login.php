@@ -47,6 +47,10 @@ if (isset($_SESSION['loggedin'])){
             echo "<p class='warning'>You are not logged in</p>";
         }
 
+        if ($_GET['loginToBuy']){
+            echo "<p class='warning'>You need to be logged in to purchase items.</p>";
+        }
+
         if (!empty($_POST)){
 
             $email = $_POST['email'];
@@ -147,7 +151,7 @@ if (isset($_SESSION['loggedin'])){
             <input type="submit" value="No account? Register!" class="submit register">
         </form>
 
-        <form action="forgot_password.php">
+        <form action="send_password_reset.php">
             <input type="submit" value="Forgot Password?" class="submit forgot">
         </form>
     </div>

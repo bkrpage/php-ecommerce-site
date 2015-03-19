@@ -2,7 +2,8 @@
 
     $conn = Common::connect_db();
 
-    $tmp_email = "email@example.com";
+    $email = $_SESSION['userID'];
+
     $tmp_addr = "123 address rad, address land, ad12 3re";
     //TODO - this
     $date = date("Y-m-d H:i:s");
@@ -19,11 +20,11 @@
 
     // Adds order into database
     $add_order = "INSERT INTO ORDERS (EMAIL, TOTAL, ORDER_DATE, DELIVERY_DATE, DELIVERY_METHOD, SHIPPING_ADDRESS)
-                    VALUES ('$tmp_email', '$total', '$date', '$del_date','$del_method' , '$tmp_addr')";
+                    VALUES ('$email', '$total', '$date', '$del_date','$del_method' , '$tmp_addr')";
     mysqli_query($conn,$add_order);
 
     //gets the order from the ORDERS table to create an order contents row. - due to lack of foreign keys thanks to lack of InnoDB.
-    $get_order = "SELECT * FROM ORDERS WHERE EMAIL = '$tmp_email' AND ORDER_DATE = '$date'";
+    $get_order = "SELECT * FROM ORDERS WHERE EMAIL = '$email' AND ORDER_DATE = '$date'";
     $orders_row = mysqli_fetch_assoc(mysqli_query($conn, $get_order));
 
     $order_id = $orders_row['ORDER_ID'];

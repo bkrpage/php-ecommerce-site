@@ -1,6 +1,5 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
-require 'mailer/PHPMailerAutoload.php';
 session_start();
 
 $page_title = "Change Password";
@@ -71,6 +70,10 @@ if (isset($_SESSION['loggedin'])){
 
             if (empty($update_errors)){
                 $_SESSION['userID'] = $session_email;
+
+                $delete_token = "UPDATE LOGIN SET TOKEN = NULL WHERE TOKEN = '$token'";
+                $result = mysqli_query($conn, $del_token);
+
                 header('Location: login.php?successfulPassChange=true');
 
 

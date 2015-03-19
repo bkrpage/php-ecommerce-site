@@ -20,10 +20,7 @@ if (isset($_SESSION['loggedin'])){
         if ($_POST['step'] == 2) {
             $conn = Common::connect_db();
 
-            echo "hello";
-
             $user = $_POST['email'];
-            echo $user;
             $qry_check_user = "SELECT * FROM LOGIN WHERE USERNAME LIKE '$user'";
             $result_check = mysqli_query($conn, $qry_check_user);
 
