@@ -6,12 +6,15 @@ $page_title = "Edit Variant";
 include("inc/header.php");
 
 if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
-
 	$_SESSION['admin'] = 1; // so the session is definitely set i.e. session has ended but cookies are set.
+	
 	$conn = Common::connect_db();
 	
-	$item = $_GET['id'];
-	if($item_id = null){
+	if ((!empty($_GET['id']))) { // down here to excecute above code before hand.
+		$item = $_GET['id'];
+	} else if (!empty($_POST['id'])){
+		$item = $_POST['id'];
+	} else {
 		header(Location::browse.php);
 	}
 	
@@ -70,42 +73,43 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
 			$count++;	
 		}
 	}
-		$query2 = "SELECT * FROM ITEM_VARIANT WHERE ITEM_ID ='$item';";
-		$result2 = mysqli_query($conn, $query2);
-		echo"<form name='adimAdd' action='editvariant.php' method='Post' enctype='multipart/form-data'>";
-		$drawcount=1;
+	
+	$query2 = "SELECT * FROM ITEM_VARIANT WHERE ITEM_ID ='$item';";
+	$result2 = mysqli_query($conn, $query2);
+	echo"<form name='adimAdd' action='editvariant.php' method='Post' enctype='multipart/form-data'>";
+	$drawcount=1;
+	
+	while ($row = mysqli_fetch_array($result2, MYSQL_ASSOC)) {
+		$d = $row['VARIANT_ID'];
+		$desc = $row['VARIANT_DESC'];
+		$p = $row['PRICE'];
+		$s = $row['ITEM_STOCK'];
+		$del = $row['IS_OBSELETE'];
 		
-		while ($row = mysqli_fetch_array($result2, MYSQL_ASSOC)) {
-			$d = $row['VARIANT_ID'];
-			$desc = $row['VARIANT_DESC'];
-			$p = $row['PRICE'];
-			$s = $row['ITEM_STOCK'];
-			$del = $row['IS_OBSELETE'];
-			
-			$boxname= "desc".$d;
-			echo"Variant Description <br>";
-			echo "<input required type='text' name='$boxname' maxlength = '140' value ='$desc'><br>";
-			$boxname = "price".$d;
-			echo"Variant Price<br>";
-			echo "<input required type='number' name='$boxname' step='.01' decimals='1' min='0'  maxlength = '10' value ='$p'><br>";
-			$boxname = "fileToUpload".$drawcount;
-			echo"Variant Image <br>";
-			echo "<input type='file' name='$boxname' id='$boxname'><br>";
-			$boxname = "stock".$d;
-			echo"Variant Stock <br>";
-			echo "<input required type='number' step='any' min='0'  name='$boxname' maxlength = '7' value ='$s'><br>";
-			echo"Obselete";
-			$boxname = "delete".$d;
-			
-			if($del==1){
-				echo"<input type ='checkbox' name ='$boxname'  checked >";
-			}else{
-				echo"<input type ='checkbox' name ='$boxname'>";
-			}
-			echo"<br>";
-			$drawcount++;
+		$boxname= "desc".$d;
+		echo"Variant Description <br>";
+		echo "<input required type='text' name='$boxname' maxlength = '140' value ='$desc'><br>";
+		$boxname = "price".$d;
+		echo"Variant Price<br>";
+		echo "<input required type='number' name='$boxname' step='.01' decimals='1' min='0'  maxlength = '10' value ='$p'><br>";
+		$boxname = "fileToUpload".$drawcount;
+		echo"Variant Image <br>";
+		echo "<input type='file' name='$boxname' id='$boxname'><br>";
+		$boxname = "stock".$d;
+		echo"Variant Stock <br>";
+		echo "<input required type='number' step='any' min='0'  name='$boxname' maxlength = '7' value ='$s'><br>";
+		echo"Obselete";
+		$boxname = "delete".$d;
+		
+		if($del==1){
+			echo"<input type ='checkbox' name ='$boxname' checked >";
+		}else{
+			echo"<input type ='checkbox' name ='$boxname'>";
 		}
-	echo"<button type='submit' name = 'confirm'> Update Variants</button> </form>";
+		echo"<br>";
+		$drawcount++;
+	}
+	echo"<input type='hidden' name='id' value='$item'><button type='submit' name = 'confirm'> Update Variants</button> </form>";
     } else {
         header('Location:login.php');
     }
