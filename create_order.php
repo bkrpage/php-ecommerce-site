@@ -2,8 +2,17 @@
     $conn = Common::connect_db();
     $email = $_SESSION['userID'];
 
-    $tmp_addr = "123 address rad, address land, ad12 3re";
-    //TODO - this
+    $qry_get_address = "SELECT * FROM CUSTOMER_DETAILS WHERE USERNAME LIKE '$email'";
+    $get_address = mysqli_query($conn, $qry_get_address);
+
+    $row = mysqli_fetch_assoc($get_address);
+    $a1 = $row['ADDRESS1'];
+    $a2 = $row['ADDRESS2'];
+    $a3 = $row['ADDRESS3'];
+
+    $address = $a1 . ", ". $a2 .", ". $a3;
+
+
     $date = date("Y-m-d H:i:s");
     $del_method = $_POST['post_method'];
 
@@ -18,7 +27,7 @@
 
     // Adds order into database
     $add_order = "INSERT INTO ORDERS (EMAIL, TOTAL, ORDER_DATE, DELIVERY_DATE, DELIVERY_METHOD, SHIPPING_ADDRESS)
-                    VALUES ('$email', '$total', '$date', '$del_date','$del_method' , '$tmp_addr')";
+                    VALUES ('$email', '$total', '$date', '$del_date','$del_method' , '$address')";
     mysqli_query($conn,$add_order);
 
     //gets the order from the ORDERS table to create an order contents row. - due to lack of foreign keys thanks to lack of InnoDB.
