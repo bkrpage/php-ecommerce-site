@@ -2,6 +2,8 @@
 <head>
     <title> <?php echo $page_title; ?></title>
 
+    <link rel="stylesheet" type="text/css" href="style/normalise.css">
+    <link rel="stylesheet" type="text/css" href="style/style.css">
     <link rel="stylesheet" type="text/css" href="style/base.css">
 
     <?php
