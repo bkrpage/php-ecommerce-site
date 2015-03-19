@@ -3,7 +3,6 @@ require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 session_start();
 
 $page_title = "Login";
-
 include("inc/header.php");
 
 if (isset($_COOKIE['user'])){

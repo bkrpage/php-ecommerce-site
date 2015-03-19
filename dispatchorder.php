@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
         $_SESSION['admin'] = 1; // so the session is definitely set i.e. session has ended but cookies are set.
         $is_admin == true;

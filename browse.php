@@ -1,5 +1,9 @@
 <?php
-	require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
+session_start();
+
+$page_title = "Shop";
+include("inc/header.php");
 
 	$conn = Common::connect_db();
 	$query1 = "SELECT * FROM ITEM";

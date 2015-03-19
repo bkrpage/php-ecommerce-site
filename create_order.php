@@ -1,7 +1,5 @@
 <?php
-
     $conn = Common::connect_db();
-
     $email = $_SESSION['userID'];
 
     $tmp_addr = "123 address rad, address land, ad12 3re";
