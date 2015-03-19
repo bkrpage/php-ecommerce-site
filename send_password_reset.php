@@ -3,7 +3,7 @@ require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 require 'mailer/PHPMailerAutoload.php';
 session_start();
 
-$page_title = "Change Password";
+$page_title = "Send reset token";
 
 include("inc/header.php");
 
