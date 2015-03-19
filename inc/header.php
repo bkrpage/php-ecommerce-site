@@ -29,12 +29,18 @@
     <ul>
         <li><a href="index.php"> Home</a></li>
         <li><a href="search.php">Search</a></li>
+        <li><a href="basket.php">Basket</a></li>
 
         <?php
         if (!empty($_SESSION['loggedin'])){
         if ($_SESSION['loggedin'] == true) {
             echo "<li><a href='account.php'>Your account</a></li>";
         }}
+
+
+        if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
+            echo "<li><a href='admin.php'>Admin Options</a></li>";
+        }
             ?>
     </ul>
   </nav>
