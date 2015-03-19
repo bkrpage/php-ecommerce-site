@@ -8,19 +8,9 @@ echo "Variant has been added";
 
 	$item_id = $_SESSION["itemID"];
 	$conn = Common::connect_db();
-	if(isset($_POST["confirm"])){
 	
-	echo $item_id;
-	$variantDesc =$_POST['variantDesc'];
-	$variantDesc = Common::clean($variantDesc, $conn);
-	$price =$_POST['price'];
-	$price = Common::clean($price, $conn);
-	$stock = $_POST['stock'];
-	$stock = Common::clean($stock, $conn);
-	$count = 1;
-	
-$query = "SELECT * FROM ITEM WHERE ITEM_ID = $item_id;";
-$result = mysqli_query($conn, $query);
+	$query = "SELECT * FROM ITEM WHERE ITEM_ID = $item_id;";
+	$result = mysqli_query($conn, $query);
 	if($result){
 		$row = mysqli_fetch_row($result);
 	
@@ -31,12 +21,35 @@ $result = mysqli_query($conn, $query);
 		echo"error couldn't get the details of this item ";
 	}
 	
+	if(isset($_POST["confirm"])){
+	
+	$variantDesc =$_POST['variantDesc'];
+	$variantDesc = Common::clean($variantDesc, $conn);
+	$price =$_POST['price'];
+	$stock = $_POST['stock'];
+	$count = 1;
+
+	if(($price)< 0){
+	$errorCatch[] = '-Please enter a Price above 0!';
+	}else {
+	$price = Common::clean($price, $conn);
+	}
+	if(($stock) < 0){
+		$errorCatch[] = '-Please enter a Stock above 0!';
+	}else {
+		$stock = Common::clean($stock, $conn);
+	}
 	$query4 = "SELECT MAX(VARIANT_ID) FROM ITEM_VARIANT WHERE ITEM_ID = $item_id;"; 
 	$res4 = mysqli_query($conn, $query4);
 	$row= mysqli_fetch_row($res4);
 	$var_Id =$row[0]+1;
 //print values of item (non-editable)
-
+if(!empty($errorCatch)){
+		echo'Error:';
+		foreach($errorCatch as $msg){
+			echo" $msg<br> ";
+		}
+	} else {
 require 'upload.php';
 
 $query2 = "INSERT INTO ITEM_VARIANT(VARIANT_ID,ITEM_ID,VARIANT_DESC, PRICE, ITEM_STOCK, ITEM_IMG) 
@@ -54,7 +67,7 @@ $query2 = "INSERT INTO ITEM_VARIANT(VARIANT_ID,ITEM_ID,VARIANT_DESC, PRICE, ITEM
 //onCommit if cbox ticked do another.
 
 mysqli_close($conn);
-
+}
 }
 ?>
 <!DOCTYPE html>	
@@ -74,14 +87,14 @@ mysqli_close($conn);
 		?>">
 	<br>
 	Price*:<br>
-	<input required type="number" step=".01" decimals="1" name="price" maxlength = "10" value = "<?php
+	<input required type="number" step=".01" decimals="1" min="0"  name="price" maxlength = "10" value = "<?php
 	if(isset($_POST['price'])){
 	echo $_POST['price'];
 	}
 	?>"><br>
 	
 	Initial variant Stock*:<br>
-	<input required type="number" step="10" name="stock" maxlength = "7" value = "<?php
+	<input required type="number" step="any" min="0"  name="stock" maxlength = "7" value = "<?php
 	if(isset($_POST['stock'])){
 	echo $_POST['stock'];
 	}
