@@ -62,7 +62,7 @@
                 <input type='hidden' name='id' value='$item_id'>
                 <input type='submit' value='Edit Variants'>
             </form>
-            <form action='editlisting.php' method='get'>
+            <form action='edititem.php' method='get'>
                 <input type='hidden' name='id' value='$item_id'>
                 <input type='submit' value='Edit Listing'>
             </form>
