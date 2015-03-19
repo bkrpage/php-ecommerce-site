@@ -103,12 +103,6 @@ if (isset($_SESSION['loggedin'])){
                     while ($values = mysqli_fetch_assoc($result)){
                         $is_admin = (boolean)$values['ADMIN'];
                     }
-                    if ($is_admin == true){
-                        $cookie_name = "admin";
-                        $cookie_value = $is_admin;
-                        $cookie_time = time() + 3600 * 24 * 7; //setting cookie expiry time for a week
-                        setcookie($cookie_name, $cookie_value, $cookie_time);
-                    }
 
                     $_SESSION['loggedin'] = true;
                     $_SESSION['userID'] = $email;
@@ -122,6 +116,13 @@ if (isset($_SESSION['loggedin'])){
                         $cookie_value = $email;
                         $cookie_time = time() + 3600 * 24 * 7; //setting cookie expiry time for a week
                         setcookie($cookie_name, $cookie_value, $cookie_time);$cookie_name = "user";
+
+                        if ($is_admin == true){
+                            $cookie_name = "admin";
+                            $cookie_value = $is_admin;
+                            $cookie_time = time() + 3600 * 24 * 7; //setting cookie expiry time for a week
+                            setcookie($cookie_name, $cookie_value, $cookie_time);
+                        }
                     }
 
                     header('Location: index.php'); // TODO

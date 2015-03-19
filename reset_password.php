@@ -20,6 +20,7 @@ if (isset($_SESSION['loggedin'])){
     if (isset($_GET['t'])) {
         $conn = Common::connect_db();
         $token = $_GET['t'];
+        $_SESSION['token'] = $token;
 
         $check_token = "SELECT USERNAME FROM LOGIN WHERE TOKEN = '$token'";
         $result = mysqli_query($conn, $check_token);
@@ -62,6 +63,7 @@ if (isset($_SESSION['loggedin'])){
                 $email = $_SESSION['user_resetting_pass'];
                 $q_edit_pw = "UPDATE LOGIN SET PASSWORD = '$new_hashed_pw' WHERE USERNAME LIKE '$email'";
 
+
                 if(!mysqli_query($conn, $q_edit_pw)){
                     $update_errors[] ="<p class='error'>There was an error while changing the Password. Please try again.</p>";
                 }
@@ -69,13 +71,12 @@ if (isset($_SESSION['loggedin'])){
 
 
             if (empty($update_errors)){
-                $_SESSION['userID'] = $session_email;
 
+                $token = $_SESSION['token'];
                 $delete_token = "UPDATE LOGIN SET TOKEN = NULL WHERE TOKEN = '$token'";
-                $result = mysqli_query($conn, $del_token);
+                mysqli_query($conn, $delete_token);
 
                 header('Location: login.php?successfulPassChange=true');
-
 
             } else {
                 foreach($update_errors as $error){
@@ -98,4 +99,4 @@ if (isset($_SESSION['loggedin'])){
     </form>
 
     <?php
-}
+} ?>

@@ -4,8 +4,8 @@ session_start();
 	$conn = Common::connect_db();
 	
 	if(isset($_POST["confirm"])){
+
 	// this is where get all the general user details and display them to him
-	
 	$itemName =$_POST['itemName'];
 	$itemDesc =$_POST['itemDesc'];
 	$variantDesc =$_POST['variantDesc'];

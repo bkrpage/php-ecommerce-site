@@ -1,6 +1,11 @@
 <?php
     require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
+    session_start();
 
+    if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
+        $_SESSION['admin'] = 1; // so the session is definitely set i.e. session has ended but cookies are set.
+        $is_admin = true;
+    }
 
     $product_id = $_GET['id'];
     if (isset($_GET['v'])) {
@@ -48,7 +53,7 @@
     // END HEADER
     if ($product_exists) {
         ?>
-        <h1><?php echo $item->getPName(); ?></h1>
+        <h1><?php echo $item->getPName(); ?> <?php if ($is_admin){ echo "<a href='editvariant.php?id=".$item->getPID()."'> Edit Listing </a>";} ?></h1>
         <p>
             <?php echo $item->getPDesc(); ?>
             <BR>

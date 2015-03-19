@@ -9,9 +9,10 @@ include("inc/header.php");
 if (isset($_COOKIE['user'])){
     $_SESSION['loggedin'] = true;
     $_SESSION['userID'] = $_COOKIE['user'];
-    if (isset($_COOKIE['admin'])){
-        $is_admin = true;
-    }
+}
+if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
+    $_SESSION['admin'] = 1; // so the session is definitely set i.e. session has ended but cookies are set.
+    $is_admin = true;
 }
 
 if (!empty($_SESSION['loggedin'])){
@@ -39,6 +40,9 @@ if (!empty($_SESSION['loggedin'])){
         ?>
         <div class="details-box">
             <h1> Welcome <?php echo $u_fn ?>! </h1>
+            <?php if ($is_admin){
+                echo "<p> You are an admin </p>";
+            }?>
             <?php
             if ($_GET['alreadyLoggedIn']){
                 echo "<p class='warning'>You are already logged in, please log out to reset password with security question.</p>";
