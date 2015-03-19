@@ -41,7 +41,11 @@ if (!empty($_SESSION['loggedin'])){
         <div class="details-box">
             <h1> Welcome <?php echo $u_fn ?>! </h1>
             <?php if ($is_admin){
-                echo "<p> You are an admin </p>";
+                echo "
+                    <form action='admin.php'>
+                        <button type='submit'>Admin Control Panel</button>
+                    </form>
+                ";
             }?>
             <?php
             if ($_GET['alreadyLoggedIn']){
