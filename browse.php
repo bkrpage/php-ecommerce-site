@@ -1,13 +1,11 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
+	require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 
 	$conn = Common::connect_db();
-	
 	$query1 = "SELECT * FROM ITEM";
 	$result=mysqli_query($conn,$query1);
 	
 	while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
-	
 		$tempProd=$row['ITEM_ID'];
 		$r=mysqli_query($conn,"SELECT * FROM ITEM WHERE ITEM_ID ='$tempProd';");
 		
