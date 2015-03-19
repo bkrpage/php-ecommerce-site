@@ -1,8 +1,15 @@
 <?php
-	require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
+if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
+
+	$_SESSION['admin'] = 1; // so the session is definitely set i.e. session has ended but cookies are set.   
+    require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 	$conn = Common::connect_db();
 	
-	$item = 5;
+	$item = $_GET['id'];
+	if($item_id = null){
+		header(Location::browse.php);
+	}
+	
 	if(isset($_POST['confirm'])){
 		
 		$query2 = "SELECT * FROM ITEM_VARIANT WHERE ITEM_ID ='$item';";
@@ -16,57 +23,53 @@
 			$boxname = "price".$d;
 			$price =$_POST[$boxname];
 			if(($price)< 0){
-			$errorCatch[] = '-Please enter a Price above 0!';
+				$errorCatch[] = '-Please enter a Price above 0!';
 			}else {
-			$price = Common::clean($price, $conn);
+				$price = Common::clean($price, $conn);
 			}
 			$boxname = "img".$d;
 			$boxname = "stock".$d;
 			$stock =$_POST[$boxname];
 			if(($stock) < 0){
-			$errorCatch[] = '-Please enter a Stock above 0!';
+				$errorCatch[] = '-Please enter a Stock above 0!';
 			}else {
-			$stock = Common::clean($stock, $conn);
-				}
+				$stock = Common::clean($stock, $conn);
+			}
 			$boxname = "delete".$d;
 			$delete =$_POST[$boxname];
 			
-			
 			if(isset($_POST["$boxname"])){
-			
-			$updateqry1="UPDATE ITEM_VARIANT SET IS_OBSELETE =1 WHERE ITEM_ID= $item AND VARIANT_ID=$count;";
-			mysqli_query($conn, $updateqry1);
-			
+				$updateqry1="UPDATE ITEM_VARIANT SET IS_OBSELETE =1 WHERE ITEM_ID= $item AND VARIANT_ID=$count;";
+				mysqli_query($conn, $updateqry1);
 			}else{
 				$updateqry2="UPDATE ITEM_VARIANT SET IS_OBSELETE =0 WHERE ITEM_ID= $item AND VARIANT_ID=$count;";
 				mysqli_query($conn, $updateqry2);
 			}
-			if(!empty($errorCatch)){
-			foreach($errorCatch as $msg){
-			echo"$msg <br>";
-			}
-			} else {
-			$updateqry3="UPDATE ITEM_VARIANT SET VARIANT_DESC = '$desc', PRICE = $price, ITEM_STOCK = $stock WHERE ITEM_ID= $item AND VARIANT_ID=$count;";
-			mysqli_query($conn, $updateqry3);
 			
-			$boxname = "img".$d;
+			if(!empty($errorCatch)){
+				foreach($errorCatch as $msg){
+					echo"$msg <br>";
+				}
+			} else {
+				$updateqry3="UPDATE ITEM_VARIANT SET VARIANT_DESC = '$desc', PRICE = $price, ITEM_STOCK = $stock WHERE ITEM_ID= $item AND VARIANT_ID=$count;";
+				mysqli_query($conn, $updateqry3);
+				$boxname = "img".$d;
 				require 'upload.php';
-			if($uploadOk==1 && $target_file != 'images/'){
-				$updateqry="UPDATE ITEM_VARIANT SET ITEM_IMG = '$target_file' WHERE ITEM_ID= $item AND VARIANT_ID=$count;";
-				mysqli_query($conn, $updateqry);
+				
+				if($uploadOk==1 && $target_file != 'images/'){
+					$updateqry="UPDATE ITEM_VARIANT SET ITEM_IMG = '$target_file' WHERE ITEM_ID= $item AND VARIANT_ID=$count;";
+					mysqli_query($conn, $updateqry);
+				}
 			}
-		}unset($errorCatch);
-		
+			unset($errorCatch);
 			$count++;	
+		}
 	}
-}
-		
 		$query2 = "SELECT * FROM ITEM_VARIANT WHERE ITEM_ID ='$item';";
 		$result2 = mysqli_query($conn, $query2);
-	
-
 		echo"<form name='adimAdd' action='editvariant.php' method='Post' enctype='multipart/form-data'>";
 		$drawcount=1;
+		
 		while ($row = mysqli_fetch_array($result2, MYSQL_ASSOC)) {
 			$d = $row['VARIANT_ID'];
 			$desc = $row['VARIANT_DESC'];
@@ -88,16 +91,19 @@
 			echo "<input required type='number' step='any' min='0'  name='$boxname' maxlength = '7' value ='$s'><br>";
 			echo"Obselete";
 			$boxname = "delete".$d;
+			
 			if($del==1){
 				echo"<input type ='checkbox' name ='$boxname'  checked >";
 			}else{
 				echo"<input type ='checkbox' name ='$boxname'>";
 			}
-			
 			echo"<br>";
 			$drawcount++;
 		}
-		
 	echo"<button type='submit' name = 'confirm'> Update Variants</button> </form>";
+    } else {
+        header('Location:login.php');
+    }
+
 	
 ?>
