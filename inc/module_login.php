@@ -20,8 +20,7 @@ if (!empty($_SESSION['loggedin'])){
 
         ?>
         <div class="login-module">
-            Hello, <?php echo $u_fn;?>! Not <?php echo $u_fn ?>? <a href="../logout.php">Logout </a><BR>
-            <a href="../account.php">Your account</a>
+            Hello, <?php echo $u_fn;?>! Not <?php echo $u_fn ?>? <a href="logout.php">Logout </a><BR>
         </div>
         <?php
     } else {
@@ -30,7 +29,7 @@ if (!empty($_SESSION['loggedin'])){
     }
 } else {
     ?>
-    <div class="login-module"> <a href="../login.php"> Login</a>. Don't have an account? <a href="../register.php">Register here</a></div>
+    <div class="login-module"> <a href="login.php"> Login</a>. Don't have an account? <a href="register.php">Register here</a></div>
 <?php
 }
 

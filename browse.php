@@ -5,30 +5,30 @@ session_start();
 $page_title = "Shop";
 include("inc/header.php");
 
-	$conn = Common::connect_db();
-	$query1 = "SELECT * FROM ITEM";
-	$result=mysqli_query($conn,$query1);
-	
-	while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
-		$tempProd=$row['ITEM_ID'];
-		$r=mysqli_query($conn,"SELECT * FROM ITEM WHERE ITEM_ID ='$tempProd';");
-		
-		while ($r = mysqli_fetch_array($r,MYSQLI_ASSOC)){
-			echo"<div class='my_class'>";
-			echo($r['ITEM_NAME']);
-			$query1 = "SELECT * FROM ITEM_VARIANT WHERE ITEM_ID='$tempProd' AND VARIANT_ID=1;";
-			$result2=mysqli_query($conn, $query1);
-			$res = mysqli_fetch_array($result2);
-			echo"<br>";
-			$prc = $res['PRICE'];
-			$src = $res['ITEM_IMG'];
-			echo"Price: £$prc ";
-			echo"<br>";
-			echo"<a href='listing.php?id=$tempProd'>";
-			echo"<img src='$src' alt='' style='width:100px;height:100px'>";
-			echo"</a>";
-			echo"</div>";
-			echo"<br>";
-		}
-	}
+$conn = Common::connect_db();
+$query1 = "SELECT * FROM ITEM";
+$result=mysqli_query($conn,$query1);
 ?>
+    <div class="body-box">
+<?php
+while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
+    $tempProd=$row['ITEM_ID'];
+    $r=mysqli_query($conn,"SELECT * FROM ITEM WHERE ITEM_ID ='$tempProd';");
+
+    while ($r = mysqli_fetch_array($r,MYSQLI_ASSOC)){
+        echo"<div class='display-item'>";
+        $query1 = "SELECT * FROM ITEM_VARIANT WHERE ITEM_ID='$tempProd' AND VARIANT_ID=1;";
+        $result2=mysqli_query($conn, $query1);
+        $res = mysqli_fetch_array($result2);
+        $prc = $res['PRICE'];
+        $src = $res['ITEM_IMG'];
+        echo"<div class='display-img'><a href='listing.php?id=$tempProd'><img src='$src' alt='".$r['ITEM_NAME']."'></a></div>";
+        echo"<div class='display-name'><a href='listing.php?id=$tempProd'>".$r['ITEM_NAME']."</a></div>";
+        echo"<div class='display-price'>£$prc </div>";
+        echo"<div class='cf'></div></div>";
+
+    }
+}
+?>
+    <div class='cf'></div>
+    </div>

@@ -16,8 +16,26 @@
 <body>
   <header>
 
-      <?php include('module_login.php');?>
-      <nav>
+      <div class="title">
+          <h1>PHP e-Shop</h1>
+      </div>
 
-      </nav>
+      <?php include('module_login.php');?>
+
+      <div class="cf"></div>
+
   </header>
+  <nav>
+    <ul>
+        <li><a href="index.php"> Home</a></li>
+        <li><a href="search.php">Search</a></li>
+
+        <?php
+        if (!empty($_SESSION['loggedin'])){
+        if ($_SESSION['loggedin'] == true) {
+            echo "<li><a href='account.php'>Your account</a></li>";
+        }}
+            ?>
+    </ul>
+  </nav>
+  <div class="cf"></div>

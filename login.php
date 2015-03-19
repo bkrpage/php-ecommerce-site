@@ -12,12 +12,12 @@ if (isset($_COOKIE['user'])){
 
 if (isset($_SESSION['loggedin'])){
     if ($_SESSION['loggedin'] == true){
-        header('Location: index.php');
+        header('Location: index.php'); // if logged in
     } else {
         echo "Error";
         unset($_SESSION['loggedin']);
     }
-} else {
+} else { // if not logged in
     ?>
     <div class="form-box index">
 

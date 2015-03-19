@@ -53,7 +53,22 @@
     // END HEADER
     if ($product_exists) {
         ?>
-        <h1><?php echo $item->getPName(); ?> <?php if ($is_admin){ echo "<a href='editvariant.php?id=".$item->getPID()."'> Edit Listing </a>";} ?></h1>
+        <h1><?php echo $item->getPName(); ?></h1>
+        <?php
+        if ($is_admin){
+            $item_id = $item->getPID();
+            echo "
+            <form action='editvariant.php' method='get'>
+                <input type='hidden' name='id' value='$item_id'>
+                <input type='submit' value='Edit Variants'>
+            </form>
+            <form action='editlisting.php' method='get'>
+                <input type='hidden' name='id' value='$item_id'>
+                <input type='submit' value='Edit Listing'>
+            </form>
+            ";
+        }
+        ?>
         <p>
             <?php echo $item->getPDesc(); ?>
             <BR>
