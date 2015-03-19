@@ -34,19 +34,10 @@ if (!empty($_SESSION['loggedin'])){
         $u_a2 = $user_details[5];
         $u_a3 = $user_details[6];
         $u_pc = $user_details[7];
-        $u_co = $user_details[8];
-        $u_sq = $user_details[9];
-        $u_sa = $user_details[10];
         ?>
         <div class="details-box">
             <h1> Welcome <?php echo $u_fn ?>! </h1>
-            <?php if ($is_admin){
-                echo "
-                    <form action='admin.php'>
-                        <button type='submit'>Admin Control Panel</button>
-                    </form>
-                ";
-            }?>
+
             <?php
             if ($_GET['alreadyLoggedIn']){
                 echo "<p class='warning'>You are already logged in, please log out to reset password with security question.</p>";
@@ -96,14 +87,6 @@ if (!empty($_SESSION['loggedin'])){
                 <tr>
                     <td>Post Code: </td>
                     <td><?php echo $u_pc; ?></td>
-                </tr>
-                <tr>
-                    <td>Country: </td>
-                    <td><?php echo $u_co; ?></td>
-                </tr>
-                <tr>
-                    <td>Security question: </td>
-                    <td><?php echo $u_sq; ?></td>
                 </tr>
             </table>
 

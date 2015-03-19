@@ -68,7 +68,6 @@ $mail->msgHTML("$text ");
 if (!$mail->send()) {
     echo "The order email was not sent. Please contact the web admin with this code: " . $mail->ErrorInfo;
 } else {
-    echo "Mail was successfully sent.";
 }
 
 ?>

@@ -4,10 +4,16 @@
 
     $cart = new Cart();
 
+    if (!isset($_POST['step'])){
+        header('Location: index.php');
+    }
+
     if ($_POST['step'] == 1) {
         $page_title = "Delivery"; // For header.php
     } else if ($_POST['step']  == 2){
         $page_title = "Confirm Order";
+    } else if ($_POST['step'] == 3){
+        $page_title = "Order Complete!";
     }
 
     require("inc/header.php");
