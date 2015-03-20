@@ -53,7 +53,12 @@
     // END HEADER
     if ($product_exists) {
         ?>
+        <div class="body-box">
+
         <h1><?php echo $item->getPName(); ?></h1>
+
+        <img src="<?php echo $item->getImgPath(); ?>"
+             alt="Image of <?php echo $item->getPName() . " : " . $item->getVDesc(); ?>" style='float: right; margin-right:50px;'>
         <?php
         if ($is_admin){
             $item_id = $item->getPID();
@@ -70,16 +75,14 @@
         }
         ?>
         <p>
-            <?php echo $item->getPDesc(); ?>
-            <BR>
-            Current Variation: <?php echo $item->getVDesc(); ?>
+            <strong>Current Variation</strong>: <?php echo $item->getVDesc(); ?>
+        </p>
+        <p>
+            <strong>Description</strong>: <?php echo $item->getPDesc(); ?>
         </p>
 
-        <img src="<?php echo $item->getImgPath(); ?>"
-             alt="Image of <?php echo $item->getPName() . " : " . $item->getVDesc(); ?>">
-
         <p>
-            Variants:
+           <strong>Pick from variations</strong>:
         <ul>
             <?php
             $qry_all_variants = "SELECT * FROM ITEM_VARIANT WHERE ITEM_ID = '$product_id' ORDER BY VARIANT_ID";
@@ -108,11 +111,15 @@
             <input type="hidden" name="add" value="true">
             <input type="submit" value="Add To Cart">
         </form>
+        </div>
 
 <?php
     } else {
 ?>
-    <h2> Item Does Not Exist </h2>
+
+        <div class="body-box">
+            <h2> Item Does Not Exist </h2>
+        </div>
 <?php
     }
 ?>

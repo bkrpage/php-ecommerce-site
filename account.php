@@ -35,7 +35,7 @@ if (!empty($_SESSION['loggedin'])){
         $u_a3 = $user_details[6];
         $u_pc = $user_details[7];
         ?>
-        <div class="details-box">
+        <div class="body-box">
             <h1> Welcome <?php echo $u_fn ?>! </h1>
 
             <?php
@@ -89,6 +89,7 @@ if (!empty($_SESSION['loggedin'])){
                     <td><?php echo $u_pc; ?></td>
                 </tr>
             </table>
+            <BR>
 
             <form action="change_details.php">
                 <input type="submit" value="Anything wrong? Change Details" class="submit">

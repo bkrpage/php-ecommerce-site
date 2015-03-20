@@ -5,6 +5,7 @@ session_start();
 $page_title = "Edit Item";
 include("inc/header.php");
 
+echo "<div class='body-box'>";
 if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
     $_SESSION['admin'] = 1; // so the session is definitely set i.e. session has ended but cookies are set.
     $is_admin == true;
@@ -79,3 +80,6 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
     header('Location:login.php');
 }
 ?>
+</div>
+</body>
+</html>

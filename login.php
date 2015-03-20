@@ -19,36 +19,12 @@ if (isset($_SESSION['loggedin'])){
     }
 } else { // if not logged in
     ?>
-    <div class="form-box index">
+
+    <div class="body-box">
 
         <h1> Login </h1>
 
         <?php
-        if ($_GET['successfulReset']){
-
-            unset($_SESSION['user_resetting_pass']);
-            echo "<p class='success'>Password successfully reset, now you can login below</p>";
-        }
-
-        if ($_GET['registered']){
-            echo "<p class='success'>Successfully registered. Please login below</p>";
-        }
-
-        if ($_GET['loggedout']){
-            echo "<p class='success'>You have logged out. Goodbye!</p>";
-        }
-
-        if ($_GET['alreadyloggedout']){
-            echo "<p class='warning'>You are already logged out</p>";
-        }
-
-        if ($_GET['notLoggedIn']){
-            echo "<p class='warning'>You are not logged in</p>";
-        }
-
-        if ($_GET['loginToBuy']){
-            echo "<p class='warning'>You need to be logged in to purchase items.</p>";
-        }
 
         if (!empty($_POST)){
 

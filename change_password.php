@@ -40,8 +40,7 @@ $user_details = mysqli_fetch_row($result_user_details);
 
 $auth_errors = array();
 ?>
-
-<div class="form-box">
+<div class='body-box'>
 
     <h1> Change Password</h1>
     <p>Changing Password for <?php echo $user_details[0];?>. Not you? <a href='logout.php'>Logout</a>.</p>

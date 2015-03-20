@@ -46,6 +46,7 @@
     require("inc/header.php");
 ?>
 
+    <div class="body-box">
     <h2>Cart Contents (<?php echo count($cart) ?> items)</h2>
 
 <?php
@@ -60,15 +61,15 @@
             }
         }
         $total = $cart -> calcTotalPrice();
-        echo "<p>Total: £$total </p>";
-        echo "
+        printf ("<p>Total: £%0.2f </p>",$total);
+        ?>
         <form action='purchase.php' method ='post'>
             <input type='hidden' name='step' value='1'>
             <input type='submit' value='Purchase'>
         </form>
-        ";
+<?php
     }
-
 ?>
+    </div>
 </body>
 </html>

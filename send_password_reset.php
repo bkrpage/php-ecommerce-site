@@ -7,6 +7,7 @@ $page_title = "Send reset token";
 
 include("inc/header.php");
 
+echo "<div class='body-box'>";
 if (isset($_COOKIE['user'])){
     $_SESSION['loggedin'] = true;
     $_SESSION['userID'] = $_COOKIE['user'];
@@ -84,3 +85,7 @@ if (isset($_SESSION['loggedin'])){
     <?php
     }
 }
+?>
+</div>
+</body>
+</html>

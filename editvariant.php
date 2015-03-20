@@ -5,6 +5,7 @@ session_start();
 $page_title = "Edit Variant";
 include("inc/header.php");
 
+echo "<div class='body-box'>";
 if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
 	$_SESSION['admin'] = 1; // so the session is definitely set i.e. session has ended but cookies are set.
 	
@@ -56,7 +57,7 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
 			
 			if(!empty($errorCatch)){
 				foreach($errorCatch as $msg){
-					echo"$msg <br>";
+					echo"<p>$msg </p>";
 				}
 			} else {
 				$updateqry3="UPDATE ITEM_VARIANT SET VARIANT_DESC = '$desc', PRICE = $price, ITEM_STOCK = $stock WHERE ITEM_ID= $item AND VARIANT_ID=$count;";
@@ -88,16 +89,16 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
 		
 		$boxname= "desc".$d;
 		echo"Variant Description <br>";
-		echo "<input required type='text' name='$boxname' maxlength = '140' value ='$desc'><br>";
+		echo "<input required type='text' name='$boxname' maxlength = '140' value ='$desc'><br><br>";
 		$boxname = "price".$d;
 		echo"Variant Price<br>";
-		echo "<input required type='number' name='$boxname' step='.01' decimals='1' min='0'  maxlength = '10' value ='$p'><br>";
+		echo "<input required type='number' name='$boxname' step='.01' decimals='1' min='0'  maxlength = '10' value ='$p'><br><br>";
 		$boxname = "fileToUpload".$drawcount;
 		echo"Variant Image <br>";
 		echo "<input type='file' name='$boxname' id='$boxname'><br>";
 		$boxname = "stock".$d;
 		echo"Variant Stock <br>";
-		echo "<input required type='number' step='any' min='0'  name='$boxname' maxlength = '7' value ='$s'><br>";
+		echo "<input required type='number' step='any' min='0'  name='$boxname' maxlength = '7' value ='$s'><br><br>";
 		echo"Obselete";
 		$boxname = "delete".$d;
 		
@@ -106,13 +107,14 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
 		}else{
 			echo"<input type ='checkbox' name ='$boxname'>";
 		}
-		echo"<br>";
+		echo"<br><br>";
 		$drawcount++;
 	}
 	echo"<input type='hidden' name='id' value='$item'><button type='submit' name = 'confirm'> Update Variants</button> </form>";
     } else {
         header('Location:login.php');
     }
-
-	
 ?>
+</div>
+</body>
+</html>

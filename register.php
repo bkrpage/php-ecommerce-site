@@ -37,8 +37,7 @@ $phone = $_POST['number'];
 $sec_a = $_POST['sec_a'];*/
 ?>
 
-
-<div class="form-box change-details">
+<div class='body-box'>
 
 <h1>Register</h1>
 <?php
@@ -163,54 +162,40 @@ if (!empty($_POST)){
 }
 ?>
 <form action="register.php" method="POST">
-<div class="change-details left">
-    <label for="first_name">Name *</label>
-    <input type="text" name="first_name" maxlength="256" class="groupdown fn" value="<?php if (isset($firstname)) echo $firstname;?>">
-
-    <label for="surname">Surname *</label>
-    <input type="text" name="surname" maxlength="256" class="sn" value="<?php if (isset($surname)) echo $surname;?>">
-
-    <label for="email">Email *</label>
-    <input type="email" name="email" maxlength="256"  class="groupdown e" value="<?php if (isset($email)) echo $email;?>">
-
-    <label for="confirm_email">Email Confirm *</label>
-    <input type="email" name="confirm_email" maxlength="256"  class="ec" value="<?php if (isset($email_confirmation)) echo $email_confirmation;?>">
-
-    <!--<label for="sec_q">Security Question *</label>
-    <input type="text" name="sec_q" maxlength="256" class="groupdown sq" value="<?php if (isset($sec_q)) echo $sec_q;?>">
-
-    <label for="sec_a">Security Answer *</label>
-    <input type="text" name="sec_a" maxlength="256" class="sa" value="<?php if (isset($sec_a)) echo $sec_a;?>">-->
-</div>
-
-<div class="change-details right">
+<label for="first_name">Name *</label>
+<input type="text" name="first_name" maxlength="256" class="groupdown fn" value="<?php if (isset($firstname)) echo $firstname;?>">
+<BR><BR>
+<label for="surname">Surname *</label>
+<input type="text" name="surname" maxlength="256" class="sn" value="<?php if (isset($surname)) echo $surname;?>">
+<BR><BR>
+<label for="email">Email *</label>
+<input type="email" name="email" maxlength="256"  class="groupdown e" value="<?php if (isset($email)) echo $email;?>">
+    <BR><BR>
+<label for="confirm_email">Email Confirm *</label>
+<input type="email" name="confirm_email" maxlength="256"  class="ec" value="<?php if (isset($email_confirmation)) echo $email_confirmation;?>">
+    <BR><BR>
 <label for="number">Phone number *</label>
 <input type="text" name="number" maxlength="11" class="pn"value="<?php if (isset($phone)) echo $phone;?>">
-
+    <BR><BR>
 <label for="address1">Address *</label>
 <input type="text" name="address1" maxlength="256" class="groupdown a1"  value="<?php if (isset($addr1)) echo $addr1;?>">
-
+    <BR><BR>
 <label for="address2">Address 2 </label>
 <input type="text" name="address2" maxlength="256" class="groupdown a2"  value="<?php if (isset($addr3)) echo $addr2;?>">
-
+    <BR><BR>
 <label for="address3">Address 3 </label>
 <input type="text" name="address3" maxlength="256" class="groupdown a3" value="<?php if (isset($addr3)) echo $addr3;?>">
-
+    <BR><BR>
 <label for="post_code">Post/Zip Code *</label>
 <input type="text" name="post_code"  maxlength="16" class="groupdown pc"value="<?php if (isset($postcode)) echo $postcode;?>">
-</div>
-
-<div class="clearfix"><!-- Standard clearfix to correct floated divs --></div>
-
-<div id="password" >
-    <label for="password">Password *</label>
-    <input type="password" name="password" class="groupdown pw">
-
-    <label for="confirm_password">Password confirm *</label>
-    <input type="password" name="confirm_password" class="cpw">
-
-    <input type="submit" value="Register" class="submit">
-</div>
+    <BR><BR><BR>
+<label for="password">Password *</label>
+<input type="password" name="password" class="groupdown pw">
+    <BR><BR>
+<label for="confirm_password">Password confirm *</label>
+<input type="password" name="confirm_password" class="cpw">
+    <BR><BR>
+<input type="submit" value="Register" class="submit">
 
 </form>
 </div>

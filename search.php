@@ -1,15 +1,16 @@
 <?php
-require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
-session_start();
-$page_title = "Search";
+    require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
+    session_start();
+    $page_title = "Search";
 
-include("inc/header.php");
+    include("inc/header.php");
 	$conn = Common::connect_db();
-				
-	echo"<form name='adimAdd' action='search.php' method='Post' enctype='multipart/form-data'>";
-	echo"<input type='text' name='searchbar' placeholder='Search our products...' maxlength = '140'>";
-	echo"<button type='submit' name = 'confirm'> Search</button> </form>";
-	
+?>
+    <div class="body-box">
+	<form name='adimAdd' action='search.php' method='Post' enctype='multipart/form-data'>
+	<input type='text' name='searchbar' placeholder='Search our products...' maxlength = '140'>
+	<button type='submit' name = 'confirm'> Search</button> </form>
+<?php
 	if(isset($_POST['confirm'])){
 		$searchinput =$_POST['searchbar'];
 		$searchinput = Common::clean($searchinput, $conn);
@@ -28,21 +29,16 @@ include("inc/header.php");
 				$r=mysqli_query($conn,"SELECT * FROM ITEM WHERE ITEM_ID ='$tempProd';");
 				
 				while ($r = mysqli_fetch_array($r,MYSQLI_ASSOC)){
-					echo"<div class='my_class'>";
-					echo($r['ITEM_NAME']);
+                    echo"<div class='display-item'>";
 					$query1 = "SELECT * FROM ITEM_VARIANT WHERE ITEM_ID='$tempProd' AND VARIANT_ID=1;";
 					$result2=mysqli_query($conn, $query1);
 					$res = mysqli_fetch_array($result2);
-					echo"<br>";
-					$prc = $res['PRICE'];
-					$src = $res['ITEM_IMG'];
-					echo"Price: £$prc ";
-					echo"<br>";
-					echo"<a href='listing.php?id=$tempProd'>";
-					echo"<img src='$src' alt='' style='width:100px;height:100px'>";
-					echo"</a>";
-					echo"</div>";
-					echo"<br>";
+                    $prc = $res['PRICE'];
+                    $src = $res['ITEM_IMG'];
+                    echo"<div class='display-img'><a href='listing.php?id=$tempProd'><img src='$src' alt='".$r['ITEM_NAME']."'></a></div>";
+                    echo"<div class='display-name'><a href='listing.php?id=$tempProd'>".$r['ITEM_NAME']."</a></div>";
+                    echo"<div class='display-price'>£$prc </div>";
+                    echo"<div class='cf'></div></div>";
 				}
 				
 			}
@@ -66,5 +62,6 @@ include("inc/header.php");
 		$new=$new.");";
 		return ($new);
 	}
-
 ?>
+    <div class='cf'></div>
+    </div>

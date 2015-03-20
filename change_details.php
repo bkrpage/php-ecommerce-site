@@ -51,7 +51,7 @@ if (isset($_SESSION['loggedin'])){
 
 
         ?>
-        <div class="form-box change-details ">
+        <div class='body-box'>
 
         <h1>Change details</h1>
         <p>Changing details for <?php echo" $user_details[1]";?>. Not you? <a href="logout.php">Logout</a><p>
@@ -205,54 +205,44 @@ if (isset($_SESSION['loggedin'])){
         }
         ?>
         <form action="change_details.php?" method="POST">
-        <div class="change-details left">
             <label for="first_name">Name</label>
             <input type="text" name="first_name" maxlength="256" class="groupdown fn" value="<?php if (isset($firstname)) echo $firstname;?>">
-
+            <BR><BR>
             <label for="surname">Surname</label>
             <input type="text" name="surname" maxlength="256" class="sn" value="<?php if (isset($surname)) echo $surname;?>">
-
+            <BR><BR>
             <label for="email">Email </label>
             <input type="email" name="email" maxlength="256"  class="groupdown e" value="<?php if (isset($email)) echo $email;?>">
-
+            <BR><BR>
             <label for="confirm_email">Email Confirm</label>
             <input type="email" name="confirm_email" maxlength="256"  class="ec" value="<?php if (isset($email_confirmation)) echo $email_confirmation;?>">
-
-        </div>
-
-        <div class="change-details right">
+            <BR><BR>
             <label for="number">Phone number</label>
             <input type="text" name="number" maxlength="11" class="pn"value="<?php if (isset($phone)) echo $phone;?>">
-
+            <BR><BR>
             <label for="address1">Address</label>
             <input type="text" name="address1" maxlength="256" class="groupdown a1"  value="<?php if (isset($addr1)) echo $addr1;?>">
-
+            <BR><BR>
             <label for="address2">Address 2</label>
             <input type="text" name="address2" maxlength="256" class="groupdown a2"  value="<?php if (isset($addr3)) echo $addr2;?>">
-
+            <BR><BR>
             <label for="address3">Address 3 </label>
             <input type="text" name="address3" maxlength="256" class="groupdown a3" value="<?php if (isset($addr3)) echo $addr3;?>">
-
+            <BR><BR>
             <label for="post_code">Post/Zip Code </label>
             <input type="text" name="post_code"  maxlength="16" class="groupdown pc"value="<?php if (isset($postcode)) echo $postcode;?>">
-
-        </div>
-
-        <div class="clearfix"><!-- Standard clearfix to correct floated divs --></div>
-
-        <div id="password-confirm" >
+            <BR><BR><BR>
             <label for="password">So we know it's you, please confirm your password</label>
             <input type="password" name="password" class="pw">
             <input type="submit" value="Edit details" class="submit">
-        </div>
+
         </form>
 
-        <div id="cd-change-pass">
-            <form action="change_password.php">
-                <input type="submit" value="Change your password here" class="submit">
-            </form>
-        </div>
-        </div>
+        <BR>
+        <form action="change_password.php">
+            <input type="submit" value="Change your password here" class="submit">
+        </form>
+    </div>
     <?php
 
     } else {

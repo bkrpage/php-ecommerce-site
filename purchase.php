@@ -29,6 +29,8 @@ if (isset($_SESSION['loggedin'])){
         if (!empty($_SESSION['cart_items'])) {
             $cart->setItems($_SESSION['cart_items']);
 
+            echo "<div class='body-box'>";
+
             if ($_POST['step'] == 1) { // Select Postage step
                 ?>
                 <form action="purchase.php" method="POST">
@@ -81,21 +83,25 @@ if (isset($_SESSION['loggedin'])){
 
                     }
                 }
-                echo "</tbody><tfoot>";
-
+                ?>
+                </tbody><tfoot>
+                    <?php
                 printf("<tr><td colspan='2'> Subtotal</td><td> £%0.2f</td>", $subtotal);
                 printf("<tr><td colspan='2'> Postage</td><td> £%0.2f</td>", $post);
                 printf("<tr><td colspan='2'> Total</td><td><strong> £%0.2f</strong></td>", $total);
 
-                echo "</tfoot></table>";
+                    ?>
+                    </tfoot></table>
+                <?php
+
                 echo "<BR>
-            <form action='purchase.php' method ='post'>
-                <input type='hidden' name='post_method' value='$post_method'>
-                <input type='hidden' name='post_price' value='$post'>
-                <input type='hidden' name='step' value='3'>
-                <input type='submit' value='Complete Order'>
-            </form>
-            ";
+                <form action='purchase.php' method ='post'>
+                    <input type='hidden' name='post_method' value='$post_method'>
+                    <input type='hidden' name='post_price' value='$post'>
+                    <input type='hidden' name='step' value='3'>
+                    <input type='submit' value='Complete Order'>
+                </form>
+                ";
 
             } else if ($_POST['step'] == 3) { //Places order
 
@@ -169,15 +175,16 @@ if (isset($_SESSION['loggedin'])){
 
                     echo("<tr><td>$item_name[0] - $var_name[0]</td><td>$qty</td><td>£$price</td></tr>");
                 }
-
-                echo "</tbody><tfoot>";
+                ?>
+                </tbody><tfoot>
+                    <?php
 
                 printf("<tr><td colspan='2'> Subtotal</td><td> £%0.2f</td>", $subtotal);
                 printf("<tr><td colspan='2'> Postage</td><td> £%0.2f</td>", $post);
                 printf("<tr><td colspan='2'> Total</td><td><strong> £%0.2f</strong></td>", $total);
-
-                echo "</tfoot></table>";
-
+                ?>
+                    </tfoot></table>
+                <?php
                 require('email_order.php');
 
                 echo "<BR>
@@ -186,6 +193,7 @@ if (isset($_SESSION['loggedin'])){
                 </form>
                 ";
             }
+            echo "</div>";
         } else {
             // header('index.php');
         }
@@ -197,3 +205,6 @@ if (isset($_SESSION['loggedin'])){
 } else {
     header('Location: login.php?loginToBuy=true');
 }
+?>
+</body>
+</html>
