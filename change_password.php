@@ -30,9 +30,6 @@ $new_hashed_pw = SHA1("$new_password");
 $password = $_POST['password'];
 $hashed_pw = SHA1("$password");
 
-$email = strtolower($email);
-$email_confirmation = strtolower($email_confirmation);
-
 $qry_user_details = "SELECT * FROM LOGIN WHERE USERNAME LIKE '$session_email';";
 $result_user_details = mysqli_query($conn, $qry_user_details);
 

@@ -16,6 +16,8 @@ if (isset($_SESSION['loggedin'])) {
 
         $session_email = $_SESSION['userID'];
 
+
+        $conn = Common::connect_db();
         //Information from forms
         $firstname = $_POST['first_name'];
         $surname = $_POST['surname'];
@@ -24,19 +26,27 @@ if (isset($_SESSION['loggedin'])) {
         $addr2 = $_POST['address2'];
         $addr3 = $_POST['address3'];
         $postcode = $_POST['post_code'];
-        $country = $_POST['country'];
 
         $email = $_POST['email'];
 
         $email_confirmation = $_POST['confirm_email'];
+
+        $firstname = Common::clean($firstname, $conn);
+        $surname = Common::clean($surname, $conn);
+        $phone = Common::clean($phone, $conn);
+        $addr1 = Common::clean($addr1, $conn);
+        $addr2 = Common::clean($addr2, $conn);
+        $addr3 = Common::clean($addr3, $conn);
+        $postcode = Common::clean($postcode, $conn);
+
+        $email = Common::clean($email, $conn);
+        $email_confirmation = Common::clean($email_confirmation, $conn);
 
         $password = $_POST['password'];
         $hashed_pw = SHA1("$password"); //Hashed password for entry into DB
 
         $email = strtolower($email);
         $email_confirmation = strtolower($email_confirmation);
-
-        $conn = Common::connect_db();
         if (!$conn) {
             die(mysqli_connect_error());
         }
