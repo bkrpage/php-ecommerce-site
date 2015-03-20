@@ -94,7 +94,7 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
 		header('Location:login.php');
 	}
 ?>
-	
+	<div class="body-box">
 	<form name="adimAdd" action="admin.php"  method="Post" enctype="multipart/form-data">
 	Item name*:<br>
 	<input required type="text" name="itemName" maxlength = "40" value ="<?php
@@ -148,4 +148,6 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
 	<button type="submit" name = "confirm"> Add Product</button>
 
     </form>
+    </div>
+</body>
 </html>
