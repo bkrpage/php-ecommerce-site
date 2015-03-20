@@ -9,20 +9,20 @@ echo "<div class='body-box''>";
 
 if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
     $_SESSION['admin'] = 1; // so the session is definitely set i.e. session has ended but cookies are set.
-    $feedback          = $_SESSION["check"];
+    $feedback = $_SESSION["check"];
 
     if ($feedback == true) {
         echo "<p>Variant has been added</p>";
     }
 
     $item_id = $_SESSION["itemID"];
-    $conn    = Common::connect_db();
+    $conn = Common::connect_db();
 
-    $query  = "SELECT * FROM ITEM WHERE ITEM_ID = $item_id;";
+    $query = "SELECT * FROM ITEM WHERE ITEM_ID = $item_id;";
     $result = mysqli_query($conn, $query);
 
     if ($result) {
-        $row      = mysqli_fetch_row($result);
+        $row = mysqli_fetch_row($result);
         $itemName = $row[1];
         $itemDesc = $row[2];
 
@@ -34,9 +34,9 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
 
         $variantDesc = $_POST['variantDesc'];
         $variantDesc = Common::clean($variantDesc, $conn);
-        $price       = $_POST['price'];
-        $stock       = $_POST['stock'];
-        $count       = 1;
+        $price = $_POST['price'];
+        $stock = $_POST['stock'];
+        $count = 1;
 
         if (($price) < 0) {
             $errorCatch[] = '-Please enter a Price above 0!';
@@ -51,8 +51,8 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
         }
 
         $query4 = "SELECT MAX(VARIANT_ID) FROM ITEM_VARIANT WHERE ITEM_ID = $item_id;";
-        $res4   = mysqli_query($conn, $query4);
-        $row    = mysqli_fetch_row($res4);
+        $res4 = mysqli_query($conn, $query4);
+        $row = mysqli_fetch_row($res4);
         $var_Id = $row[0] + 1;
         //print values of item (non-editable)
 
@@ -92,21 +92,21 @@ echo $itemDesc;
 <br><BR>
 <form id="adimAdd" action="addvariant.php" method="Post" enctype="multipart/form-data">
     Variant*:<br>
-    <input required type="text" name="variantDesc" maxlength = "140" value="<?php
+    <input required type="text" name="variantDesc" maxlength="140" value="<?php
     if (isset($_POST['variantDesc'])) {
         echo $_POST['variantDesc'];
     }
     ?>">
     <br>
     Price*:<br>
-    <input required type="number" step=".01" decimals="1" min="0"  name="price" maxlength = "10" value = "<?php
+    <input required type="number" step=".01" decimals="1" min="0" name="price" maxlength="10" value="<?php
     if (isset($_POST['price'])) {
         echo $_POST['price'];
     }
     ?>"><br>
 
     Initial variant Stock*:<br>
-    <input required type="number" step="any" min="0"  name="stock" maxlength = "7" value = "<?php
+    <input required type="number" step="any" min="0" name="stock" maxlength="7" value="<?php
     if (isset($_POST['stock'])) {
         echo $_POST['stock'];
     }
@@ -116,8 +116,9 @@ echo $itemDesc;
     <p></p>
     Select image to upload:
     <input type="file" name="fileToUpload1" id="fileToUpload1">
+
     <p></p>
-    <button type="submit" name = "confirm"> Add Product</button>
+    <button type="submit" name="confirm"> Add Product</button>
 
 </form>
 </div>

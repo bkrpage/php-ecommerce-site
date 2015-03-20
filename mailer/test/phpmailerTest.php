@@ -471,7 +471,7 @@ class PHPMailerTest extends PHPUnit_Framework_TestCase
             'first.last@sub.do,com',
             'first\@last@iana.org',
             '123456789012345678901234567890123456789012345678901234567890' .
-                '@12345678901234567890123456789012345678901234 [...]',
+            '@12345678901234567890123456789012345678901234 [...]',
             'first.last',
             '12345678901234567890123456789012345678901234567890123456789012345@iana.org',
             '.first.last@iana.org',
@@ -484,7 +484,7 @@ class PHPMailerTest extends PHPUnit_Framework_TestCase
             'first\@last@iana.org',
             'first.last@',
             'x@x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.x23456789.' .
-                'x23456789.x23456789.x23456789.x23 [...]',
+            'x23456789.x23456789.x23456789.x23 [...]',
             'first.last@[.12.34.56.78]',
             'first.last@[12.34.56.789]',
             'first.last@[::12.34.56.78]',
@@ -531,7 +531,7 @@ class PHPMailerTest extends PHPUnit_Framework_TestCase
             'test@example.',
             'test@.org',
             'test@12345678901234567890123456789012345678901234567890123456789012345678901234567890' .
-                '12345678901234567890 [...]',
+            '12345678901234567890 [...]',
             'test@[123.123.123.123',
             'test@123.123.123.123]',
             'NotAnEmail',
@@ -556,10 +556,10 @@ class PHPMailerTest extends PHPUnit_Framework_TestCase
             'cal(foo)bar)@iamcal.com',
             'cal(foo\)@iamcal.com',
             'first(12345678901234567890123456789012345678901234567890)last@(1234567890123456789' .
-                '01234567890123456789012 [...]',
+            '01234567890123456789012 [...]',
             'first(middle)last@iana.org',
             'first(abc("def".ghi).mno)middle(abc("def".ghi).mno).last@(abc("def".ghi).mno)example' .
-                '(abc("def".ghi).mno). [...]',
+            '(abc("def".ghi).mno). [...]',
             'a(a(b(c)d(e(f))g)(h(i)j)@iana.org',
             '.@',
             '@bar.com',
@@ -1200,6 +1200,7 @@ EOT;
         $this->buildBody();
         $this->assertTrue($this->Mail->send(), 'Base64 encoding failed');
     }
+
     /**
      * S/MIME Signing tests
      */
@@ -1359,7 +1360,7 @@ EOT;
             'POP before SMTP failed'
         );
         //Kill the fake server
-        shell_exec('kill -TERM '.escapeshellarg($pid));
+        shell_exec('kill -TERM ' . escapeshellarg($pid));
         sleep(2);
     }
 
@@ -1380,7 +1381,7 @@ EOT;
             POP3::popBeforeSmtp('localhost', 1101, 10, 'user', 'xxx', $this->Mail->SMTPDebug),
             'POP before SMTP should have failed'
         );
-        shell_exec('kill -TERM '.escapeshellarg($pid));
+        shell_exec('kill -TERM ' . escapeshellarg($pid));
         sleep(2);
     }
 

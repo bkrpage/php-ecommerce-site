@@ -3,6 +3,7 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 /* Box Model end*/
 
 header {
@@ -11,7 +12,7 @@ header {
     padding: 12px;
 }
 
-.title{
+.title {
     float: left;
 }
 
@@ -19,16 +20,17 @@ header {
     color: #c33454;
 }
 
-.login-module{
-    float:right;
+.login-module {
+    float: right;
     padding-top: 50px;
 }
+
 nav {
     border: 1px black solid;
     border-left: 0;
     border-right: 0;
     padding: 0 10px;
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
 nav ul {
@@ -43,7 +45,7 @@ nav ul li {
     text-transform: uppercase;
 }
 
-.body-box{
+.body-box {
     width: 90%;
     margin: 5px auto;
     padding: 12px;
@@ -59,7 +61,7 @@ nav ul li {
     margin-bottom: 8px;
 }
 
-.display-img img{
+.display-img img {
     height: 150px;
     width: 150px;
     float: left;
@@ -71,7 +73,7 @@ nav ul li {
     padding: 20px;
 }
 
-.display-price{
-   float: left;
+.display-price {
+    float: left;
     padding: 20px;
 }

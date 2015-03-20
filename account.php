@@ -6,22 +6,22 @@ $page_title = "Control Panel";
 
 include("inc/header.php");
 
-if (isset($_COOKIE['user'])){
+if (isset($_COOKIE['user'])) {
     $_SESSION['loggedin'] = true;
     $_SESSION['userID'] = $_COOKIE['user'];
 }
-if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
+if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
     $_SESSION['admin'] = 1; // so the session is definitely set i.e. session has ended but cookies are set.
     $is_admin = true;
 }
 
-if (!empty($_SESSION['loggedin'])){
-    if ($_SESSION['loggedin'] == true){
+if (!empty($_SESSION['loggedin'])) {
+    if ($_SESSION['loggedin'] == true) {
         $conn = Common::connect_db();
 
         $users_email = $_SESSION['userID'];
 
-        $get_det= "SELECT * FROM CUSTOMER_DETAILS WHERE USERNAME LIKE '$users_email'";
+        $get_det = "SELECT * FROM CUSTOMER_DETAILS WHERE USERNAME LIKE '$users_email'";
         $result = mysqli_query($conn, $get_det);
 
         $user_details = mysqli_fetch_row($result);
@@ -36,20 +36,22 @@ if (!empty($_SESSION['loggedin'])){
         $u_pc = $user_details[7];
         ?>
         <div class="body-box">
-            <h1> Welcome <?php echo $u_fn ?>! </h1>
+            <h1> Welcome <?php
+                echo $u_fn;
+                ?>! </h1>
 
             <?php
-            if ($_GET['alreadyLoggedIn']){
+            if ($_GET['alreadyLoggedIn']) {
                 echo "<p class='warning'>You are already logged in, please log out to reset password with security question.</p>";
             }
 
-            if ($_GET['successfulChange']){
+            if ($_GET['successfulChange']) {
                 echo "<p class='success'>Details successfully changed.</p>";
             }
-            if ($_GET['successfulPassChange']){
+            if ($_GET['successfulPassChange']) {
                 echo "<p class='success'>Password successfully changed.</p>";
             }
-            if ($_GET['alreadyRegistered']){
+            if ($_GET['alreadyRegistered']) {
                 echo "<p class='warning'>You are already registered and logged in as $u_fn.</p>";
             }
 
@@ -57,36 +59,52 @@ if (!empty($_SESSION['loggedin'])){
 
             <table id="user-details">
                 <tr>
-                    <td>First Name: </td>
-                    <td><?php echo $u_fn; ?></td>
+                    <td>First Name:</td>
+                    <td><?php
+                        echo $u_fn;
+                        ?></td>
                 </tr>
                 <tr>
-                    <td>Surname: </td>
-                    <td><?php echo $u_sn; ?></td>
+                    <td>Surname:</td>
+                    <td><?php
+                        echo $u_sn;
+                        ?></td>
                 </tr>
                 <tr>
-                    <td>Email: </td>
-                    <td><?php echo $u_e; ?></td>
+                    <td>Email:</td>
+                    <td><?php
+                        echo $u_e;
+                        ?></td>
                 </tr>
                 <tr>
-                    <td>Phone Number: </td>
-                    <td><?php echo $u_no; ?></td>
+                    <td>Phone Number:</td>
+                    <td><?php
+                        echo $u_no;
+                        ?></td>
                 </tr>
                 <tr>
-                    <td>Address 1: </td>
-                    <td><?php echo $u_a1; ?></td>
+                    <td>Address 1:</td>
+                    <td><?php
+                        echo $u_a1;
+                        ?></td>
                 </tr>
                 <tr>
-                    <td>Address 2: </td>
-                    <td><?php echo $u_a2; ?></td>
+                    <td>Address 2:</td>
+                    <td><?php
+                        echo $u_a2;
+                        ?></td>
                 </tr>
                 <tr>
-                    <td>Address 3: </td>
-                    <td><?php echo $u_a3; ?></td>
+                    <td>Address 3:</td>
+                    <td><?php
+                        echo $u_a3;
+                        ?></td>
                 </tr>
                 <tr>
-                    <td>Post Code: </td>
-                    <td><?php echo $u_pc; ?></td>
+                    <td>Post Code:</td>
+                    <td><?php
+                        echo $u_pc;
+                        ?></td>
                 </tr>
             </table>
             <BR>
@@ -95,7 +113,9 @@ if (!empty($_SESSION['loggedin'])){
                 <input type="submit" value="Anything wrong? Change Details" class="submit">
             </form>
             <form action="logout.php">
-                <input type="submit" value="Not <?php echo $u_fn ?>? Logout" class="submit">
+                <input type="submit" value="Not <?php
+                echo $u_fn;
+                ?>? Logout" class="submit">
             </form>
         </div>
 
@@ -109,7 +129,5 @@ if (!empty($_SESSION['loggedin'])){
     header('Location: index.php?notLoggedIn=true');
 }
 ?>
-
-
 </body>
 </html>

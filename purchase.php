@@ -1,30 +1,30 @@
 <?php
-    require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
-    session_start();
+require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
+session_start();
 
-    $cart = new Cart();
+$cart = new Cart();
 
-    if (!isset($_POST['step'])){
-        header('Location: index.php');
-    }
+if (!isset($_POST['step'])) {
+    header('Location: index.php');
+}
 
-    if ($_POST['step'] == 1) {
-        $page_title = "Delivery"; // For header.php
-    } else if ($_POST['step']  == 2){
-        $page_title = "Confirm Order";
-    } else if ($_POST['step'] == 3){
-        $page_title = "Order Complete!";
-    }
+if ($_POST['step'] == 1) {
+    $page_title = "Delivery"; // For header.php
+} else if ($_POST['step'] == 2) {
+    $page_title = "Confirm Order";
+} else if ($_POST['step'] == 3) {
+    $page_title = "Order Complete!";
+}
 
-    require("inc/header.php");
+require("inc/header.php");
 
-if (isset($_COOKIE['user'])){
+if (isset($_COOKIE['user'])) {
     $_SESSION['loggedin'] = true;
     $_SESSION['userID'] = $_COOKIE['user'];
 }
 
-if (isset($_SESSION['loggedin'])){
-    if ($_SESSION['loggedin'] == true){
+if (isset($_SESSION['loggedin'])) {
+    if ($_SESSION['loggedin'] == true) {
 
         if (!empty($_SESSION['cart_items'])) {
             $cart->setItems($_SESSION['cart_items']);
@@ -65,33 +65,35 @@ if (isset($_SESSION['loggedin'])){
                 <h2> Confirm Order </h2>
 
                 <table>
-                <thead>
-                <tr>
-                    <th> Product</th>
-                    <th> Quantity</th>
-                    <th> Price</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-
-                foreach ($cart->getItems() as $items) { // goes into first layer of array revealing item ID
-                    foreach ($items as $vrnt) { // goes into 2nd layer of array revealing variant ID
-                        $item = $vrnt['item']; // gets the item object stored under that item and variant and refactors it into $item
-                        $qty = $vrnt['qty'];
-                        printf("<tr><td>%s - %s</td><td>%d</td><td>£%0.2f </td></tr>", $item->getPName(), $item->getVDesc(), $qty, $item->getPrice());
-
-                    }
-                }
-                ?>
-                </tbody><tfoot>
+                    <thead>
+                    <tr>
+                        <th> Product</th>
+                        <th> Quantity</th>
+                        <th> Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     <?php
-                printf("<tr><td colspan='2'> Subtotal</td><td> £%0.2f</td>", $subtotal);
-                printf("<tr><td colspan='2'> Postage</td><td> £%0.2f</td>", $post);
-                printf("<tr><td colspan='2'> Total</td><td><strong> £%0.2f</strong></td>", $total);
+
+                    foreach ($cart->getItems() as $items) { // goes into first layer of array revealing item ID
+                        foreach ($items as $vrnt) { // goes into 2nd layer of array revealing variant ID
+                            $item = $vrnt['item']; // gets the item object stored under that item and variant and refactors it into $item
+                            $qty = $vrnt['qty'];
+                            printf("<tr><td>%s - %s</td><td>%d</td><td>£%0.2f </td></tr>", $item->getPName(), $item->getVDesc(), $qty, $item->getPrice());
+
+                        }
+                    }
+                    ?>
+                    </tbody>
+                    <tfoot>
+                    <?php
+                    printf("<tr><td colspan='2'> Subtotal</td><td> £%0.2f</td>", $subtotal);
+                    printf("<tr><td colspan='2'> Postage</td><td> £%0.2f</td>", $post);
+                    printf("<tr><td colspan='2'> Total</td><td><strong> £%0.2f</strong></td>", $total);
 
                     ?>
-                    </tfoot></table>
+                    </tfoot>
+                </table>
                 <?php
 
                 echo "<BR>
@@ -146,44 +148,46 @@ if (isset($_SESSION['loggedin'])){
                     Shipped To: <?php echo $order_add; ?><BR>
                 </p>
                 <table>
-                <thead>
-                <tr>
-                    <th> Product</th>
-                    <th> Quantity</th>
-                    <th> Price</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-
-                $qry_get_order_contents = "SELECT * FROM ORDER_CONTENTS  WHERE ORDER_ID LIKE '$order_id'";
-                $get_order_contents = mysqli_query($conn, $qry_get_order_contents);
-
-                while ($row = mysqli_fetch_assoc($get_order_contents)) {
-                    $variant_id = $row['VARIANT_ID'];
-                    $item_id = $row['ITEM_ID'];
-                    $qty = $row['QUANTITY'];
-                    $price = $row ['PRICE'];
-
-                    $qry_get_item_name = "SELECT ITEM_NAME FROM ITEM WHERE ITEM_ID LIKE '$item_id'";
-                    $get_item_name = mysqli_query($conn, $qry_get_item_name);
-                    $item_name = mysqli_fetch_row($get_item_name);
-
-                    $qry_get_var_name = "SELECT VARIANT_DESC FROM ITEM_VARIANT WHERE ITEM_ID LIKE '$item_id' AND VARIANT_ID LIKE '$variant_id'";
-                    $get_var_name = mysqli_query($conn, $qry_get_var_name);
-                    $var_name = mysqli_fetch_row($get_var_name);
-
-                    echo("<tr><td>$item_name[0] - $var_name[0]</td><td>$qty</td><td>£$price</td></tr>");
-                }
-                ?>
-                </tbody><tfoot>
+                    <thead>
+                    <tr>
+                        <th> Product</th>
+                        <th> Quantity</th>
+                        <th> Price</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     <?php
 
-                printf("<tr><td colspan='2'> Subtotal</td><td> £%0.2f</td>", $subtotal);
-                printf("<tr><td colspan='2'> Postage</td><td> £%0.2f</td>", $post);
-                printf("<tr><td colspan='2'> Total</td><td><strong> £%0.2f</strong></td>", $total);
-                ?>
-                    </tfoot></table>
+                    $qry_get_order_contents = "SELECT * FROM ORDER_CONTENTS  WHERE ORDER_ID LIKE '$order_id'";
+                    $get_order_contents = mysqli_query($conn, $qry_get_order_contents);
+
+                    while ($row = mysqli_fetch_assoc($get_order_contents)) {
+                        $variant_id = $row['VARIANT_ID'];
+                        $item_id = $row['ITEM_ID'];
+                        $qty = $row['QUANTITY'];
+                        $price = $row ['PRICE'];
+
+                        $qry_get_item_name = "SELECT ITEM_NAME FROM ITEM WHERE ITEM_ID LIKE '$item_id'";
+                        $get_item_name = mysqli_query($conn, $qry_get_item_name);
+                        $item_name = mysqli_fetch_row($get_item_name);
+
+                        $qry_get_var_name = "SELECT VARIANT_DESC FROM ITEM_VARIANT WHERE ITEM_ID LIKE '$item_id' AND VARIANT_ID LIKE '$variant_id'";
+                        $get_var_name = mysqli_query($conn, $qry_get_var_name);
+                        $var_name = mysqli_fetch_row($get_var_name);
+
+                        echo("<tr><td>$item_name[0] - $var_name[0]</td><td>$qty</td><td>£$price</td></tr>");
+                    }
+                    ?>
+                    </tbody>
+                    <tfoot>
+                    <?php
+
+                    printf("<tr><td colspan='2'> Subtotal</td><td> £%0.2f</td>", $subtotal);
+                    printf("<tr><td colspan='2'> Postage</td><td> £%0.2f</td>", $post);
+                    printf("<tr><td colspan='2'> Total</td><td><strong> £%0.2f</strong></td>", $total);
+                    ?>
+                    </tfoot>
+                </table>
                 <?php
                 require('email_order.php');
 

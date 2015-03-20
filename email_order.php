@@ -27,7 +27,7 @@ $text = "
 $qry_get_order_contents = "SELECT * FROM ORDER_CONTENTS  WHERE ORDER_ID LIKE '$order_id'";
 $get_order_contents = mysqli_query($conn, $qry_get_order_contents);
 
-while ($row = mysqli_fetch_assoc($get_order_contents)){
+while ($row = mysqli_fetch_assoc($get_order_contents)) {
     $variant_id = $row['VARIANT_ID'];
     $item_id = $row['ITEM_ID'];
     $qty = $row['QUANTITY'];

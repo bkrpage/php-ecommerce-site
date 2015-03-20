@@ -5,13 +5,13 @@ session_start();
 $page_title = "Login";
 include("inc/header.php");
 
-if (isset($_COOKIE['user'])){
+if (isset($_COOKIE['user'])) {
     $_SESSION['loggedin'] = true;
     $_SESSION['userID'] = $_COOKIE['user'];
 }
 
-if (isset($_SESSION['loggedin'])){
-    if ($_SESSION['loggedin'] == true){
+if (isset($_SESSION['loggedin'])) {
+    if ($_SESSION['loggedin'] == true) {
         header('Location: index.php'); // if logged in
     } else {
         echo "Error";
@@ -26,7 +26,7 @@ if (isset($_SESSION['loggedin'])){
 
         <?php
 
-        if (!empty($_POST)){
+        if (!empty($_POST)) {
 
             $email = $_POST['email'];
             $password = $_POST['password'];
@@ -36,7 +36,7 @@ if (isset($_SESSION['loggedin'])){
 
             $entry_errors = array();
 
-            if (empty($email)){
+            if (empty($email)) {
                 $entry_errors[] = "<p class='error'>Please enter your Email</p><style>.e{border: 1px solid #CC0000;}</style>";
             } else {
                 $conn = Common::connect_db();
@@ -45,37 +45,37 @@ if (isset($_SESSION['loggedin'])){
                 $result_email = mysqli_query($conn, $email_check);
                 $num_rows = mysqli_fetch_array($result_email);
 
-                if (empty($num_rows)){
+                if (empty($num_rows)) {
                     $entry_errors[] = "<p class='error'>User does not exist</p><style>.e{border: 1px solid #CC0000;}</style>";
                 }
             }
 
-            if (empty($password) && empty($entry_errors)){
+            if (empty($password) && empty($entry_errors)) {
                 $entry_errors[] = "<p class='error'>Please enter a Password</p><style>.pw{border: 1px solid #CC0000;}</style>";
-            } else if (empty($entry_errors)){
+            } else if (empty($entry_errors)) {
                 $conn = Common::connect_db();
 
                 $password_check = "SELECT PASSWORD FROM LOGIN WHERE USERNAME LIKE '$email' AND PASSWORD LIKE '$hashed_pw'"; //Query to find duplicate emails
                 $result_password = mysqli_query($conn, $password_check);
                 $num_rows = mysqli_fetch_array($result_password);
 
-                if (empty($num_rows)){
+                if (empty($num_rows)) {
                     $entry_errors[] = "<p class='error'>Password is incorrect</p><style>.pw{border: 1px solid #CC0000;}</style>";
                 }
             }
 
-            if(empty($entry_errors)){
+            if (empty($entry_errors)) {
                 $conn = Common::connect_db();
                 //escapes any mysqli commands
                 $email = mysqli_real_escape_string($conn, $email);
 
                 $qry = "SELECT * FROM LOGIN WHERE USERNAME LIKE '$email' AND PASSWORD LIKE '$hashed_pw'";
-                $result = mysqli_query($conn,$qry);
+                $result = mysqli_query($conn, $qry);
 
                 $rows = mysqli_num_rows($result);
-                if ($rows == 1){
+                if ($rows == 1) {
 
-                    while ($values = mysqli_fetch_assoc($result)){
+                    while ($values = mysqli_fetch_assoc($result)) {
                         $is_admin = (boolean)$values['ADMIN'];
                     }
 
@@ -86,13 +86,14 @@ if (isset($_SESSION['loggedin'])){
                     //set cookie to stay logged in if wanted
 
 
-                    if ($remember_me == "true"){
+                    if ($remember_me == "true") {
                         $cookie_name = "user";
                         $cookie_value = $email;
                         $cookie_time = time() + 3600 * 24 * 7; //setting cookie expiry time for a week
-                        setcookie($cookie_name, $cookie_value, $cookie_time);$cookie_name = "user";
+                        setcookie($cookie_name, $cookie_value, $cookie_time);
+                        $cookie_name = "user";
 
-                        if ($is_admin == true){
+                        if ($is_admin == true) {
                             $cookie_name = "admin";
                             $cookie_value = $is_admin;
                             $cookie_time = time() + 3600 * 24 * 7; //setting cookie expiry time for a week
@@ -105,7 +106,7 @@ if (isset($_SESSION['loggedin'])){
 
                 mysqli_close($conn);
             } else {
-                foreach($entry_errors as $e){
+                foreach ($entry_errors as $e) {
                     echo "$e";
                 }
             }
@@ -113,7 +114,7 @@ if (isset($_SESSION['loggedin'])){
         ?>
         <form action="login.php" method="POST">
             <label for="email">Email</label>
-            <input type="email" name="email" value="<?php if(!empty($email)) echo "$email" ; ?>" class="e">
+            <input type="email" name="email" value="<?php if (!empty($email)) echo "$email"; ?>" class="e">
 
             <label for="password">Password</label>
             <input type="password" name="password" class="pw">
