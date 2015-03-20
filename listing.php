@@ -111,7 +111,7 @@ if ($product_exists) {
             <input type="hidden" name="id" value="<?php echo $item->getPId(); ?>">
             <input type="hidden" name="v" value="<?php echo $item->getVId(); ?>">
             <input type="hidden" name="add" value="true">
-            <input type="submit" value="Add To Cart">
+            <input type="submit" value="Add To Cart" <?php if ($item->getStock() < 1) { echo "disabled";} ?> >
         </form>
     </div>
 

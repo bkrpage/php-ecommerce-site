@@ -4,6 +4,15 @@ session_start();
 
 $cart = new Cart();
 
+// When "Empty Basket" is clicked
+if (isset($_POST['empty'])){
+    if ($_POST['empty']){
+        $_SESSION['cart_items'] = null;
+        unset($_SESSION['cart_items']);
+    }
+}
+
+//sets the cart items if they're set in the session.
 if (!empty($_SESSION['cart_items'])) {
     $cart->setItems($_SESSION['cart_items']);
 }
@@ -31,13 +40,13 @@ if (isset($_POST['add'])) {
         $desc = $row['ITEM_DESC'];
     }
     while ($row = mysqli_fetch_assoc($variant_result)) {
-        //use base information AND get current variant information.
+        //use base information AND get current variant information - this will be shown on the cart page.
         $item = new Item($id, $name, $desc, $row['VARIANT_ID'], $row['VARIANT_DESC'], $row['ITEM_IMAGE'], $row['PRICE'], $row['ITEM_STOCK']);
 
         $cart->addItem($item);
     }
 
-    $_SESSION['cart_items'] = $cart->getItems();
+    $_SESSION['cart_items'] = $cart->getItems(); // reset the session with new data.
 
 }
 
@@ -57,16 +66,30 @@ require("inc/header.php");
             foreach ($items as $vrnt) { // goes into 2nd layer of array revealing variant ID
                 $item = $vrnt['item']; // gets the item object stored under that item and variant and refactors it into $item
                 $qty = $vrnt['qty'];
-                printf('<p><strong>%s - %s</strong>: %d @ £%0.2f each</p>', $item->getPName(), $item->getVDesc(), $qty, $item->getPrice());
-
+                printf('<p><strong>%s - %s</strong>: %d - £%0.2f each</p>', $item->getPName(), $item->getVDesc(), $qty, $item->getPrice());
+                ?>
+                <form action="item_qty.php" method="post" >
+                    <input type="hidden" name ="id" value="<?php echo $item->getPID();?>">
+                    <input type="hidden" name="v_id" value="<?php echo $item->getVID();?>">
+                    Quantity: <input type="text" name="qty" value="<?php echo $qty; ?>" size="3">
+                    Remove Item? <input type="checkbox" name="remove" value="true">
+                    <input type="submit" value ="Edit Quantity">
+                </form>
+                <?php
             }
         }
         $total = $cart->calcTotalPrice();
         printf("<p>Total: £%0.2f </p>", $total);
         ?>
+
         <form action='purchase.php' method='post'>
             <input type='hidden' name='step' value='1'>
             <input type='submit' value='Purchase'>
+        </form>
+        <BR>
+        <form action='basket.php' method='post'>
+            <input type="hidden" name="empty" value="true">
+            <input type='submit' value='Empty Basket'>
         </form>
     <?php
     }

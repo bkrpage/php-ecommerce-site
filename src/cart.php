@@ -40,11 +40,32 @@ class Cart implements Iterator, Countable
         }
     }
 
+    public function updateItemById($id, $v_id, $qty){
+
+        if ($qty === 0) {
+            $this->deleteItemById($id, $v_id);
+        } else if (($qty > 0) && ($qty != $this->items[$id][$v_id]['qty'])) {
+            $this->items[$id][$v_id]['qty'] = $qty;
+        }
+    }
+
 
     public function deleteItem(Item $item)
     {
         $id = $item->getPId();
         $v_id = $item->getVID();
+
+        if (isset($this->items[$id][$v_id])) {
+            unset($this->items[$id][$v_id]);
+
+            $index = array_search($id, $this->ids);
+            unset($this->ids[$index]);
+
+            $this->ids = array_values($this->ids);
+        }
+    }
+
+    public function deleteItemById($id, $v_id){
 
         if (isset($this->items[$id][$v_id])) {
             unset($this->items[$id][$v_id]);
