@@ -49,35 +49,20 @@ include("inc/header.php");
 		$f7=$row['TOKEN'];
 		
 		echo"<tr>
-			<td>
-			<font face='Arial, Helvetica, sans-serif'>  $f1 &nbsp;</font>
-			</td>
-			<td>
-			<font face='Arial, Helvetica, sans-serif'>  $f2 &nbsp;</font>
-			</td>
-			<td>
-			<font face='Arial, Helvetica, sans-serif'>  $f3 &nbsp;</font>
-			</td>";
+			<td>$f1</td>
+			<td>$f2</td>
+			<td>$f3</td>";
 			
 			if($f4==1){
 				echo"<td>
-					<font face='Arial, Helvetica, sans-serif'> <form name='adimAdd' action='useroverview.php'  method='Post' enctype='multipart/form-data'> <input type=hidden name='admins' value='0'> <input type=hidden name='uname' value='$f3'> <button type='submit' name = 'confirm' > Demote Admin</button></form> &nbsp;</font>
-					</td>";
+					<form name='adimAdd' action='useroverview.php'  method='Post' enctype='multipart/form-data'> <input type=hidden name='admins' value='0'> <input type=hidden name='uname' value='$f3'> <button type='submit' name = 'confirm' > Demote Admin</button></form></td>";
 			}else{
-				echo"<td>
-					<font face='Arial, Helvetica, sans-serif'> <form name='adimAdd' action='useroverview.php'  method='Post' enctype='multipart/form-data'> <input type=hidden name='admins' value='1'> <input type=hidden name='uname' value='$f3'> <button type='submit' name = 'confirm' > Promote To Admin</button></form> &nbsp;</font>
-					</td>";
+				echo"<td><form name='adimAdd' action='useroverview.php'  method='Post' enctype='multipart/form-data'> <input type=hidden name='admins' value='1'> <input type=hidden name='uname' value='$f3'> <button type='submit' name = 'confirm' > Promote To Admin</button></form></td>";
 			}
 			echo"
-			<td>
-			<font face='Arial, Helvetica, sans-serif'>  $f6a, $f6b, $f6c, $f6d &nbsp;</font>
-			</td>
-			<td>
-			<font face='Arial, Helvetica, sans-serif'>  $f5 &nbsp;</font>
-			</td>
-			<td>
-			<font face='Arial, Helvetica, sans-serif'> $f7 &nbsp;</font>
-			</td>
+			<td>$f6a, $f6b, $f6c, $f6d </td>
+			<td>$f5 </td>
+			<td>$f7 </td>
 			</tr>";		
 		
 		
