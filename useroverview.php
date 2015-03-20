@@ -1,10 +1,12 @@
 <?php
+require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 session_start();
+
+$page_title = "Review";
+include("inc/header.php");
+
 	if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
 		$_SESSION['admin'] = 1;
-        $page_title = "Review";
-		include("inc/header.php");
-		require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 		$conn = Common::connect_db();
 		if(isset($_POST['confirm'])){
 			$aChange = $_POST['admins'];
@@ -20,27 +22,13 @@ session_start();
 		}
 		echo"<table border='0' cellspacing='2' cellpadding='4'>
 			<tr>
-			<td>
-			<font face='Arial, Helvetica, sans-serif'>First Name &nbsp;</font>
-			</td>
-			<td>
-			<font face='Arial, Helvetica, sans-serif'>Last Name &nbsp;</font>
-			</td>
-			<td>
-			<font face='Arial, Helvetica, sans-serif'>Email &nbsp;</font>
-			</td>
-			<td>
-			<font face='Arial, Helvetica, sans-serif'>Admin &nbsp;</font>
-			</td>	
-			<td>
-			<font face='Arial, Helvetica, sans-serif'> Address &nbsp;</font>
-			</td>
-			<td>
-			<font face='Arial, Helvetica, sans-serif'> Contact Number &nbsp;</font>
-			</td>
-			<td>
-			<font face='Arial, Helvetica, sans-serif'> Reset Token &nbsp;</font>
-			</td>
+			<td>First Name</td>
+			<td>Last Name</td>
+			<td>Email</td>
+			<td>Admin</td>
+			<td>Address</td>
+			<td>Contact Number</td>
+			<td>Reset Token</td>
 			</tr>";
 		
 		$qry = "SELECT * FROM CUSTOMER_DETAILS INNER JOIN LOGIN ON CUSTOMER_DETAILS.USERNAME = LOGIN.USERNAME; ";

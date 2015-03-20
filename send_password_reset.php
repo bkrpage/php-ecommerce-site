@@ -57,7 +57,7 @@ if (isset($_SESSION['loggedin'])) {
                 $mail->Subject = 'Your Password reset token';
                 //Read an HTML message body from an external file, convert referenced images to embedded,
                 //convert HTML into a basic plain-text alternative body
-                $mail->msgHTML("Please copy and paste this link into your browser: http://student20352.201415.uk/assignment2/reset_password.php?t=$token");
+                $mail->msgHTML("Please copy and paste this link into your browser: http://student20269.201415.uk/assignment2/reset_password.php?t=$token");
 
                 //send the message, check for errors
                 if (!$mail->send()) {

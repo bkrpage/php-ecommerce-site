@@ -2,6 +2,13 @@
 <project version="4">
   <component name="PublishConfigData" autoUpload="Always" serverName="Uni" uploadOnCheckin="59c28136-f69b-4fb5-a021-14c262e1d56c">
     <serverData>
+      <paths name="Reece">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/assignment2" local="$PROJECT_DIR$" web="/assignment2" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="Uni">
         <serverdata>
           <mappings>
@@ -12,7 +19,7 @@
       <paths name="george">
         <serverdata>
           <mappings>
-            <mapping deploy="/assignment2" local="$PROJECT_DIR$" web="/assigment2" />
+            <mapping deploy="/assignment2" local="$PROJECT_DIR$" web="/assignment2" />
           </mappings>
         </serverdata>
       </paths>
