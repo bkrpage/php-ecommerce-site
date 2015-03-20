@@ -1,7 +1,7 @@
 <?php
 
 require 'mailer/PHPMailerAutoload.php';
-
+// creating the invoice
 $text = "
 <p> Thanks for your order, details of your order are shown below.</p>
 
@@ -52,11 +52,13 @@ $text .= sprintf("<tr><td colspan='2'> Total</td><td><strong> £%0.2f</strong></
 
 $text .= "</tfoot></table>";
 
+
+//Below is the code for php mailer, using the standard funcations
 $mail = new PHPMailer;
 $mail->IsSMTP();
 $mail->Host = "localhost";
 //Set who the message is to be sent from
-$mail->setFrom('i7214754@bournemouth.ac.uk', 'PHP-ESHOP Order Confirmation');
+$mail->setFrom('i7709331@bournemouth.ac.uk', 'PHP-ESHOP Order Confirmation');
 //Set who the message is to be sent to
 $mail->addAddress($order_email, $name);
 //Set the subject line

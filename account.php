@@ -25,7 +25,7 @@ if (!empty($_SESSION['loggedin'])) {
         $result = mysqli_query($conn, $get_det);
 
         $user_details = mysqli_fetch_row($result);
-
+        // Assigning user details to vars
         $u_e = $user_details[0];
         $u_fn = $user_details[1];
         $u_sn = $user_details[2];

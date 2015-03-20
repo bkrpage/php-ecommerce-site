@@ -62,11 +62,13 @@ require("inc/header.php");
     <?php
 
     if (!$cart->isEmpty()) {
+        //prints out all items in cart as welll as qty change button
         foreach ($cart->getItems() as $items) { // goes into first layer of array revealing item ID
             foreach ($items as $vrnt) { // goes into 2nd layer of array revealing variant ID
                 $item = $vrnt['item']; // gets the item object stored under that item and variant and refactors it into $item
                 $qty = $vrnt['qty'];
                 printf('<p><strong>%s - %s</strong>: %d - £%0.2f each</p>', $item->getPName(), $item->getVDesc(), $qty, $item->getPrice());
+                //Below is where quanitity can be changed.
                 ?>
                 <form action="item_qty.php" method="post" >
                     <input type="hidden" name ="id" value="<?php echo $item->getPID();?>">

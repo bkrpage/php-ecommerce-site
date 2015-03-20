@@ -10,7 +10,7 @@ $a1 = $row['ADDRESS1'];
 $a2 = $row['ADDRESS2'];
 $a3 = $row['ADDRESS3'];
 
-$address = $a1 . ", " . $a2 . ", " . $a3;
+$address = $a1 . ", " . $a2 . ", " . $a3; // makes addres single string
 
 
 $date = date("Y-m-d H:i:s");
@@ -30,7 +30,7 @@ $add_order = "INSERT INTO ORDERS (EMAIL, TOTAL, ORDER_DATE, DELIVERY_DATE, DELIV
                     VALUES ('$email', '$total', '$date', '$del_date','$del_method' , '$address')";
 mysqli_query($conn, $add_order);
 
-//gets the order from the ORDERS table to create an order contents row. - due to lack of foreign keys thanks to lack of InnoDB.
+//gets the order from the ORDERS table to create an order contents row.
 $get_order = "SELECT * FROM ORDERS WHERE EMAIL = '$email' AND ORDER_DATE = '$date'";
 $orders_row = mysqli_fetch_assoc(mysqli_query($conn, $get_order));
 
