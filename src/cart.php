@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @author: Bradley Page
+ */
 class Cart implements Iterator, Countable
 {
     protected $position = 0;
@@ -13,6 +16,9 @@ class Cart implements Iterator, Countable
         return (empty($this->items));
     }
 
+    /**
+     * @param Item $item Adds the specified item to the cart - with seperate values for different variations
+     */
     public function addItem(Item $item)
     {
         $id = $item->getPId();
@@ -28,6 +34,10 @@ class Cart implements Iterator, Countable
         }
     }
 
+    /**
+     * @param Item $item Updates this item that is in cart.
+     * @param $qty Quantity to set item to
+     */
     public function updateItem(Item $item, $qty)
     {
         $id = $item->getPId();
@@ -40,6 +50,11 @@ class Cart implements Iterator, Countable
         }
     }
 
+    /**
+     * @param $id Id of item to update
+     * @param $v_id Variant ID of item to update
+     * @param $qty Quantity to update to
+     */
     public function updateItemById($id, $v_id, $qty){
 
         if ($qty === 0) {
@@ -49,7 +64,9 @@ class Cart implements Iterator, Countable
         }
     }
 
-
+    /**
+     * @param Item $item Item to be deleted form cart
+     */
     public function deleteItem(Item $item)
     {
         $id = $item->getPId();
@@ -65,6 +82,10 @@ class Cart implements Iterator, Countable
         }
     }
 
+    /**
+     * @param $id ID of item to be deleted form cart
+     * @param $v_id Variation ID of the item to be deleted from cart
+     */
     public function deleteItemById($id, $v_id){
 
         if (isset($this->items[$id][$v_id])) {
@@ -82,6 +103,10 @@ class Cart implements Iterator, Countable
         return $this->items;
     }
 
+    /**
+     * Adds the prices using the quantity of each item
+     * @return int The total price of cart
+     */
     public function calcTotalPrice()
     {
         $total_price = 0;

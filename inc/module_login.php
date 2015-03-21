@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author: Bradley Page
+ */
 
 if (isset($_COOKIE['user'])) {
     $_SESSION['loggedin'] = true;
@@ -21,6 +24,7 @@ if (!empty($_SESSION['loggedin'])) {
         ?>
         <div class="login-module">
             Hello, <?php echo $u_fn; ?>! Not <?php echo $u_fn ?>? <a href="logout.php">Logout </a><BR>
+            <span style="font-size: 9pt"> By continuing to use this site you acknowledge<BR> that we store and use cookies on your computer.</span>
         </div>
     <?php
     } else {
@@ -30,7 +34,9 @@ if (!empty($_SESSION['loggedin'])) {
 } else {
     ?>
     <div class="login-module"><a href="login.php"> Login</a>. Don't have an account? <a href="register.php">Register
-            here</a></div>
+            here</a><BR>
+    <span style="font-size: 9pt"> By continuing to use this site you acknowledge<BR> that we store and use cookies on your computer.</span>
+    </div>
 <?php
 }
 

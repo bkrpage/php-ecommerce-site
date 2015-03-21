@@ -1,4 +1,8 @@
 <?php
+/**
+@author Reece Tucker
+@author Rowan Trodd
+*/
 session_start();
 if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
     $_SESSION['admin'] = 1; // so the session is definitely set i.e. session has ended but cookies are set.
@@ -37,19 +41,19 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
 
         $c++;
     }
-    if (error == 1) {
+    if (error == 1) {//error trap prevents stock being decremented if order cannot be fulfilled
         echo "Insufficient Stock, Dispatch Cancelled.";
         echo "<button onClick='orderreview.php'> Back to Orders Screen </button>";
     } else {
         mysqli_query($conn, $qry);
 
-        foreach ($updateqry as $uq) {
+        foreach ($updateqry as $uq) {//update each piece of stock in turn (as form grow with options, this must be looped)
             mysqli_query($conn, $uq);
         }
 
-        header('Location:orderreview.php');
+        header('Location:orderreview.php');//if success, back to review the orders
     }
 } else {
-    header('Location:login.php');
+    header('Location:login.php');//if not logged in, take to login screen
 }
 ?>

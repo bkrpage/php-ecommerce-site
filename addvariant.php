@@ -1,4 +1,8 @@
 <?php
+/**
+@author Rowan Trodd
+@author Reece Tucker
+**/
 require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 session_start();
 
@@ -11,11 +15,17 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
     $_SESSION['admin'] = 1; // so the session is definitely set i.e. session has ended but cookies are set.
     $feedback = $_SESSION["check"];
 
-    if ($feedback == true) {
+    if ($feedback == true) {//feedback if previous form added a variant
         echo "<p>Variant has been added</p>";
     }
 
-    $item_id = $_SESSION["itemID"];
+    if(isset($_GET['id'])){
+		$item_id = $_GET['id'];
+		$_SESSION["itemID"]=$item_id;
+    }else{	
+        $item_id = $_SESSION["itemID"];
+    }
+
     $conn = Common::connect_db();
 
     $query = "SELECT * FROM ITEM WHERE ITEM_ID = $item_id;";
@@ -31,7 +41,7 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
     }
 
     if (isset($_POST["confirm"])) {
-
+		//if the form has been changed, attempt to add new variant
         $variantDesc = $_POST['variantDesc'];
         $variantDesc = Common::clean($variantDesc, $conn);
         $price = $_POST['price'];
@@ -54,13 +64,14 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
         $res4 = mysqli_query($conn, $query4);
         $row = mysqli_fetch_row($res4);
         $var_Id = $row[0] + 1;
-        //print values of item (non-editable)
 
+		//if any errors, prevent creation of variant and print out the errors
         if (!empty($errorCatch)) {
             foreach ($errorCatch as $msg) {
                 echo " <p>Error: $msg</p>";
             }
         } else {
+			//attempt to create a new variant using SQL
             require 'upload.php';
 
             $query2 = "INSERT INTO ITEM_VARIANT(VARIANT_ID,ITEM_ID,VARIANT_DESC, PRICE, ITEM_STOCK, ITEM_IMG) VALUES ('$var_Id','$item_id','$variantDesc','$price','$stock','$target_file');";
@@ -86,10 +97,11 @@ echo $itemName;
 ?>
 <br>
 <br>
-Item Description: <?php
+Item Description: <?php	
 echo $itemDesc;
 ?>
 <br><BR>
+
 <form id="adimAdd" action="addvariant.php" method="Post" enctype="multipart/form-data">
     Variant*:<br>
     <input required type="text" name="variantDesc" maxlength="140" value="<?php

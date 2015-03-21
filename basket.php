@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author: Bradley Page
+ */
 require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 session_start();
 
@@ -75,7 +78,7 @@ require("inc/header.php");
                     <input type="hidden" name="v_id" value="<?php echo $item->getVID();?>">
                     Quantity: <input type="text" name="qty" value="<?php echo $qty; ?>" size="3">
                     Remove Item? <input type="checkbox" name="remove" value="true">
-                    <input type="submit" value ="Edit Quantity">
+                    <input type="submit" value ="Update Quantity in Basket">
                 </form>
                 <?php
             }
@@ -86,7 +89,7 @@ require("inc/header.php");
 
         <form action='purchase.php' method='post'>
             <input type='hidden' name='step' value='1'>
-            <input type='submit' value='Purchase'>
+            <input type='submit' value='Checkout'>
         </form>
         <BR>
         <form action='basket.php' method='post'>

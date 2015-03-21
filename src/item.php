@@ -1,10 +1,9 @@
 <?php
-
 /**
  * This class is used to create item objects to be used in the listings, basket and checkout pages.
  *
  * @author Bradley Page
- * @version indev0.1
+ * @version 1
  */
 class Item
 {
@@ -17,9 +16,6 @@ class Item
     protected $price;
     protected $stock;
 
-    /**
-     *
-     */
     public function __construct($product_id, $product_name, $product_desc, $variant_id,
                                 $variant_desc, $img_path, $price, $stock)
     {

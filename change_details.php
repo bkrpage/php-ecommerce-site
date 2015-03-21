@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author: Bradley Page
+ */
 require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 session_start();
 
@@ -254,7 +257,7 @@ if (isset($_SESSION['loggedin'])) {
                        value="<?php if (isset($postcode)) echo $postcode; ?>">
                 <BR><BR><BR>
                 <label for="password">So we know it's you, please confirm your password</label>
-                <input type="password" name="password" class="pw">
+                <BR><input type="password" name="password" class="pw">
                 <input type="submit" value="Edit details" class="submit">
 
             </form>

@@ -1,4 +1,8 @@
 <?php
+/**
+@author Rowan Trodd
+@author Reece Tucker
+**/
 require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 session_start();
 
@@ -13,8 +17,9 @@ $result = mysqli_query($conn, $query1);
     <?php
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
         $tempProd = $row['ITEM_ID'];
-        $r = mysqli_query($conn, "SELECT * FROM ITEM WHERE ITEM_ID ='$tempProd';");
-
+        $r = mysqli_query($conn, "SELECT * FROM ITEM WHERE ITEM_ID ='$tempProd' AND IS_OBSELETE = 0;");
+		
+		//show all items and show the image of the first variant of that item
         while ($r = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
             echo "<div class='display-item'>";
             $query1 = "SELECT * FROM ITEM_VARIANT WHERE ITEM_ID='$tempProd' AND VARIANT_ID=1;";
@@ -22,11 +27,11 @@ $result = mysqli_query($conn, $query1);
             $res = mysqli_fetch_array($result2);
             $prc = $res['PRICE'];
             $src = $res['ITEM_IMG'];
+			//draw links for drill-down
             echo "<div class='display-img'><a href='listing.php?id=$tempProd'><img src='$src' alt='" . $r['ITEM_NAME'] . "'></a></div>";
             echo "<div class='display-name'><a href='listing.php?id=$tempProd'>" . $r['ITEM_NAME'] . "</a></div>";
             echo "<div class='display-price'>£$prc </div>";
             echo "<div class='cf'></div></div>";
-
         }
     }
     ?>

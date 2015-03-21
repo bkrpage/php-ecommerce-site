@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author: Bradley Page
+ */
 require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 session_start();
 
@@ -24,5 +27,5 @@ if (!empty($_SESSION['cart_items'])) {
 
     header('Location: basket.php');
 } else {
-    header(Location::basket.php);
+    header('Location: basket.php');
 }

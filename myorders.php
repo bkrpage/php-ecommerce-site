@@ -109,43 +109,21 @@ if (isset($_SESSION['loggedin'])) {
             }
 
             echo "<tr>
-				<td>
-				<font face='Arial, Helvetica, sans-serif'>  $f1 &nbsp;</font>
-				</td>
-				<td>
-				<font face='Arial, Helvetica, sans-serif'>  $f2 &nbsp;</font>
-				</td>
-				<td>
-				<font face='Arial, Helvetica, sans-serif'>  $f4 &nbsp;</font>
-				</td>
-				<td>
-				<font face='Arial, Helvetica, sans-serif'> $f5 &nbsp;</font>
-				</td>
-				<td>
-				<font face='Arial, Helvetica, sans-serif'>  $f6 &nbsp;</font>
-				</td>
-				<td>
-				<font face='Arial, Helvetica, sans-serif'>  $f7 &nbsp;</font>
-				</td>
-				<td>
-				<font face='Arial, Helvetica, sans-serif'> £$f3 &nbsp;</font>
-				</td>
-				<td>
-				<font face='Arial, Helvetica, sans-serif'>  $f8 &nbsp;</font>
-				</td>
-				<td>
-				<font face='Arial, Helvetica, sans-serif'>  <form name='adimAdd' action='dispatchorder.php'  method='Post' enctype='multipart/form-data'> <input type=hidden name='orderid' value='$f1'> <button type='submit' name = 'confirm' $dis > Dispatch</button></form> </font>
-				</td>
-				<td>
-				<font face='Arial, Helvetica, sans-serif'>  <form name='adimAdd' action='cancelorder.php'  method='Post' enctype='multipart/form-data'> <input type=hidden name='orderid2' value='$f1'> <button type='submit' name = 'confirm' $dis > Cancel Order</button></form> </font>
-				</td>
+				<td>$f1</td>
+				<td>$f2</td>
+				<td>$f4</td>
+				<td>$f5</td>
+				<td>$f6</td>
+				<td>$f7</td>
+				<td>£$f3</td>
+				<td>$f8</td>
 				</tr>";
         }
     } else {
         header('Location:login.php');
     }
 } else {
-    echo "Error";
     unset($_SESSION['loggedin']); // should never happen so - error
+    header('Location:login.php');
 }
 ?>

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author: Bradley Page
+ * Using PHPMailer and PHP mailer tutorials
+ */
 
 require 'mailer/PHPMailerAutoload.php';
 // creating the invoice

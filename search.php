@@ -28,21 +28,25 @@ $conn = Common::connect_db();
 
             while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                 $tempProd = $row['ITEM_ID'];
-                $r = mysqli_query($conn, "SELECT * FROM ITEM WHERE ITEM_ID ='$tempProd';");
+                $r = mysqli_query($conn, "SELECT * FROM ITEM WHERE ITEM_ID ='$tempProd' AND IS_OBSELETE = 0;");
+				if (mysqli_num_rows($r) > 0) {
 
-                while ($r = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-                    echo "<div class='display-item'>";
-                    $query1 = "SELECT * FROM ITEM_VARIANT WHERE ITEM_ID='$tempProd' AND VARIANT_ID=1;";
-                    $result2 = mysqli_query($conn, $query1);
-                    $res = mysqli_fetch_array($result2);
-                    $prc = $res['PRICE'];
-                    $src = $res['ITEM_IMG'];
-                    echo "<div class='display-img'><a href='listing.php?id=$tempProd'><img src='$src' alt='" . $r['ITEM_NAME'] . "'></a></div>";
-                    echo "<div class='display-name'><a href='listing.php?id=$tempProd'>" . $r['ITEM_NAME'] . "</a></div>";
-                    echo "<div class='display-price'>£$prc </div>";
-                    echo "<div class='cf'></div></div>";
-                }
-
+					while ($r = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
+						echo "<div class='display-item'>";
+						$query1 = "SELECT * FROM ITEM_VARIANT WHERE ITEM_ID='$tempProd' AND VARIANT_ID=1;";
+						$result2 = mysqli_query($conn, $query1);
+						$res = mysqli_fetch_array($result2);
+						$prc = $res['PRICE'];
+						$src = $res['ITEM_IMG'];
+						echo "<div class='display-img'><a href='listing.php?id=$tempProd'><img src='$src' alt='" . $r['ITEM_NAME'] . "'></a></div>";
+						echo "<div class='display-name'><a href='listing.php?id=$tempProd'>" . $r['ITEM_NAME'] . "</a></div>";
+						echo "<div class='display-price'>£$prc </div>";
+						echo "<div class='cf'></div></div>";
+						$l=1;
+					}
+				}else{
+					if($l!=1){echo("No Results Found!");}
+				}
             }
         } else {
             echo("No Results Found");

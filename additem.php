@@ -1,4 +1,8 @@
 <?php
+/**
+@author Rowan Trodd
+@author Reece Tucker
+**/
 require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 session_start();
 
@@ -11,7 +15,7 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
 		$conn = Common::connect_db();
 		
 		if(isset($_POST["confirm"])){
-			// this is where get all the general user details and display them to him
+		//if the form has data entered, post the values and update
 		
 			$itemName =$_POST['itemName'];
 			$itemDesc =$_POST['itemDesc'];
@@ -21,18 +25,18 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
 			$count = 1;
 			$price =$_POST['price'];
 		
-			if(($price)< 0){
+			if(($price)< 0){ //if the price is negative, flag an error for the error trap
 				$errorCatch[] = '-Please enter a Price above 0!';
 			}else {
 				$price = Common::clean($price, $conn);
 			}
 			
-			if(($stock) < 0){
+			if(($stock) < 0){//if the stock is negative, flag an error
 				$errorCatch[] = '-Please enter a Stock above 0!';
 			}else {
 				$stock = Common::clean($stock, $conn);
 			}
-		
+			//sanitizing the data before SQL entry
 			$itemName = Common::clean($itemName, $conn);
 			$itemDesc = Common::clean($itemDesc, $conn);
 			$variantDesc = Common::clean($variantDesc, $conn);
@@ -43,46 +47,41 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
 			$r = mysqli_query($conn,$item_Id);
 			$row = mysqli_fetch_row($r);
 		
-			$id = $row[0]+1;
+			$id = $row[0]+1;//increment to the next available id
 		
-		
-			if(!empty($errorCatch)){
+			if(!empty($errorCatch)){//if errors are thrown, prevent SQL update and print error(s)
 				echo'Error:';
 				foreach($errorCatch as $msg){
 					echo"<br> $msg ";
 				}
 			} else {
-					
+					//if no errors are found, perform item creation
 				$arr=explode(" ",$tags);
 				$query4 = "SELECT MAX(VARIANT_ID) FROM ITEM_VARIANT WHERE ITEM_ID = ($id);"; 
 				$res4 = mysqli_query($conn, $query4);
 				$row= mysqli_fetch_row($res4);
 				$var_Id =$row[0]+1;
 				
-				echo "$var_Id";
-				echo "$id";
-				echo "$variantDesc";
-				echo "$price";
-				echo "$stock";
-				
+				//create new item
 				$query1 = "INSERT INTO ITEM(ITEM_ID,ITEM_NAME, ITEM_DESC) VALUES ('$id','$itemName', '$itemDesc');";
 				$result1 = mysqli_query($conn, $query1);
 				
+				//create 1st variant of new item
 				require 'upload.php';
-				
 				$query2 = "INSERT INTO ITEM_VARIANT(VARIANT_ID,ITEM_ID,VARIANT_DESC, PRICE, ITEM_STOCK, ITEM_IMG) VALUES ('$var_Id','$id','$variantDesc', '$price','$stock','$target_file');";
 				$result2 = mysqli_query($conn, $query2);
 				
 				$res4 = mysqli_query($conn, $query4);
 				$row= mysqli_fetch_row($res4);
-
+				
+				//implement all tags into the tag database
 				foreach ($arr as $temp_tag){
 					$query3 = "INSERT INTO TAG(ITEM_ID , TAG) VALUES($id,'$temp_tag');";
 					$result3 = mysqli_query($conn, $query3);
 				}
 				
 				if(isset($_POST["moreVariants"])){
-					//set session var
+					//set session var to pass the item id to create more variants of the same item
 					$_SESSION["morevars"]=true;
 					$_SESSION["itemID"]=$id;
 					$_SESSION["check"]=false;
@@ -91,11 +90,11 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)){
 			}
 		}
 	}else{
-		header('Location:login.php');
+		header('Location:login.php'); //if not logged in as admin, you are sent to login screen
 	}
 ?>
 	<div class="body-box">
-	<form name="adimAdd" action="admin.php"  method="Post" enctype="multipart/form-data">
+	<form name="adimAdd" action="additem.php"  method="Post" enctype="multipart/form-data">
 	Item name*:<br>
 	<input required type="text" name="itemName" maxlength = "40" value ="<?php
 	if(isset($_POST['itemName'])){

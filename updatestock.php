@@ -1,4 +1,11 @@
 <?php
+require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
+session_start();
+
+$page_title = "Update Stock";
+include("inc/header.php");
+
+
 if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
     $_SESSION['admin'] = 1; // so the session is definitely set i.e. session has ended but cookies are set.
     $is_admin == true;
@@ -40,6 +47,8 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
             }
         }
     }
+
+    echo "<div class='body-box'>";
     echo "<form name='adimAdd' action='updatestock.php'  method='Post' enctype='multipart/form-data'>";
     $res = mysqli_query($conn, "SELECT * FROM ITEM");
 
@@ -71,3 +80,6 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
 }
 
 ?>
+</div>
+</body>
+</html>

@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author: Bradley Page
+ */
 require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 require 'mailer/PHPMailerAutoload.php';
 session_start();

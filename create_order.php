@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author: Bradley Page
+ */
 $conn = Common::connect_db();
 $email = $_SESSION['userID'];
 

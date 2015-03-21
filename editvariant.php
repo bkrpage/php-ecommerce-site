@@ -1,4 +1,8 @@
 <?php
+/**
+@author Reece Tucker
+@author Rowan Trodd
+*/
 require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 session_start();
 
@@ -10,20 +14,21 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
     $_SESSION['admin'] = 1; // so the session is definitely set i.e. session has ended but cookies are set.
 
     $conn = Common::connect_db();
-
-    if ((!empty($_GET['id']))) { // down here to excecute above code before hand.
+	//check an id is passed, otherwise, back to browse
+    if ((!empty($_GET['id']))) { 
         $item = $_GET['id'];
     } else if (!empty($_POST['id'])) {
         $item = $_POST['id'];
     } else {
-        header(Location::browse . php);
+        header('Location:browse.php');
     }
 
     if (isset($_POST['confirm'])) {
-
+		//if the details have been edited
         $query2 = "SELECT * FROM ITEM_VARIANT WHERE ITEM_ID ='$item';";
         $result = mysqli_query($conn, $query2);
         $count = 1;
+		
         while ($row = mysqli_fetch_array($result, MYSQL_ASSOC)) {
             $d = $row['VARIANT_ID'];
             $boxname = "desc" . $d;
@@ -31,41 +36,45 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
             $desc = Common::clean($desc, $conn);
             $boxname = "price" . $d;
             $price = $_POST[$boxname];
-            if (($price) < 0) {
+        
+			if (($price) < 0) {
                 $errorCatch[] = '-Please enter a Price above 0!';
             } else {
                 $price = Common::clean($price, $conn);
-            }
+			}
+			
             $boxname = "img" . $d;
             $boxname = "stock" . $d;
             $stock = $_POST[$boxname];
-            if (($stock) < 0) {
+            
+			if (($stock) < 0) {
                 $errorCatch[] = '-Please enter a Stock above 0!';
             } else {
                 $stock = Common::clean($stock, $conn);
             }
-            $boxname = "delete" . $d;
+            
+			$boxname = "delete" . $d;
             $delete = $_POST[$boxname];
 
-            if (isset($_POST["$boxname"])) {
+            if (isset($_POST["$boxname"])) {//delete variant if ticked
                 $updateqry1 = "UPDATE ITEM_VARIANT SET IS_OBSELETE =1 WHERE ITEM_ID= $item AND VARIANT_ID=$count;";
                 mysqli_query($conn, $updateqry1);
-            } else {
+            } else {//bring back deleted variant if unticked
                 $updateqry2 = "UPDATE ITEM_VARIANT SET IS_OBSELETE =0 WHERE ITEM_ID= $item AND VARIANT_ID=$count;";
                 mysqli_query($conn, $updateqry2);
             }
 
-            if (!empty($errorCatch)) {
+            if (!empty($errorCatch)) {//if errors, prevent update and display update.
                 foreach ($errorCatch as $msg) {
                     echo "<p>$msg </p>";
                 }
-            } else {
+            } else {//if no errors, update the database
                 $updateqry3 = "UPDATE ITEM_VARIANT SET VARIANT_DESC = '$desc', PRICE = $price, ITEM_STOCK = $stock WHERE ITEM_ID= $item AND VARIANT_ID=$count;";
                 mysqli_query($conn, $updateqry3);
                 $boxname = "img" . $d;
                 require 'upload.php';
 
-                if ($uploadOk == 1 && $target_file != 'images/') {
+                if ($uploadOk == 1 && $target_file != 'images/') {//if the file is uploaded, put the reference string in the database
                     $updateqry = "UPDATE ITEM_VARIANT SET ITEM_IMG = '$target_file' WHERE ITEM_ID= $item AND VARIANT_ID=$count;";
                     mysqli_query($conn, $updateqry);
                 }
@@ -79,7 +88,7 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
     $result2 = mysqli_query($conn, $query2);
     echo "<form name='adimAdd' action='editvariant.php' method='Post' enctype='multipart/form-data'>";
     $drawcount = 1;
-
+	//loop drawing form that expands as more variants are found
     while ($row = mysqli_fetch_array($result2, MYSQL_ASSOC)) {
         $d = $row['VARIANT_ID'];
         $desc = $row['VARIANT_DESC'];
@@ -112,7 +121,7 @@ if (($_COOKIE['admin'] == 1) || ($_SESSION['admin'] == 1)) {
     }
     echo "<input type='hidden' name='id' value='$item'><button type='submit' name = 'confirm'> Update Variants</button> </form>";
 } else {
-    header('Location:login.php');
+    header('Location:login.php');//if not logged in as admin, take to login screen
 }
 ?>
 </div>

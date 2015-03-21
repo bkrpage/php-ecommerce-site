@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author: Bradley Page
+ */
 require($_SERVER['DOCUMENT_ROOT'] . '/assignment2/src/require.php');
 session_start();
 
@@ -24,6 +27,8 @@ $variant_result = mysqli_query($conn, $get_variant);
 $id = null;
 $name = null;
 $desc = null;
+$is_obsolete = null;
+$v_is_obsolete = null;
 
 $values = mysqli_num_rows($product_result);
 if ($values > 0) {
@@ -32,11 +37,13 @@ if ($values > 0) {
         $id = $row['ITEM_ID'];
         $name = $row['ITEM_NAME'];
         $desc = $row['ITEM_DESC'];
+        $is_obsolete = $row['IS_OBSELETE'];
     }
-    while ($row = mysqli_fetch_assoc($variant_result)) {
+    while ($row2 = mysqli_fetch_assoc($variant_result)) {
         //use base information AND get current variant information.
-        $item = new Item($id, $name, $desc, $row['VARIANT_ID'], $row['VARIANT_DESC'],
-            $row['ITEM_IMG'], $row['PRICE'], $row['ITEM_STOCK']);
+        $item = new Item($id, $name, $desc, $row2['VARIANT_ID'], $row2['VARIANT_DESC'],
+            $row2['ITEM_IMG'], $row2['PRICE'], $row2['ITEM_STOCK']);
+        $v_is_obsolete = $row2['IS_OBSELETE'];
     }
 } else {
     $product_exists = false;
@@ -70,7 +77,11 @@ if ($product_exists) {
             </form>
             <form action='edititem.php' method='get'>
                 <input type='hidden' name='id' value='$item_id'>
-                <input type='submit' value='Edit Listing'>
+                <input type='submit' value='Edit Item'>
+            </form>
+	     <form action='addvariant.php' method='get'>
+                <input type='hidden' name='id' value='$item_id'>
+                <input type='submit' value='Add New Variant'>
             </form>
             ";
         }
@@ -100,10 +111,14 @@ if ($product_exists) {
         <h3><?php echo "Price: £" . $item->getPrice(); ?></h3>
 
         <?php
-        if ($item->getStock() >= 1) {
-            echo "Currently in Stock <BR><BR>";
+        if (($is_obsolete == 0)&&($v_is_obsolete == 0)) {
+            if ($item->getStock() >= 1) {
+                echo "Currently in Stock <BR><BR>";
+            } else {
+                echo "Currently out of stock<BR><BR>";
+            }
         } else {
-            echo "Currently out of stock<BR><BR>";
+            echo "Not Available";
         }
         ?>
 
@@ -111,7 +126,13 @@ if ($product_exists) {
             <input type="hidden" name="id" value="<?php echo $item->getPId(); ?>">
             <input type="hidden" name="v" value="<?php echo $item->getVId(); ?>">
             <input type="hidden" name="add" value="true">
-            <input type="submit" value="Add To Cart" <?php if ($item->getStock() < 1) { echo "disabled";} ?> >
+            <?php
+                if (($is_obsolete == 0) && ($v_is_obsolete == 0)) {
+                    echo "<input type='submit' value='Add To Cart'";
+                    if ($item->getStock() < 1) { echo 'disabled'; }
+                    echo ">";
+                }
+            ?>
         </form>
     </div>
 
